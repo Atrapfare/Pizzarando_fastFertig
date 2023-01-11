@@ -66,7 +66,7 @@ public class Datenbank {
 
     public ArrayList query(String query, int selectedColumnsInQuery) { // Datenbankabfrage mit anschließender Rückgabe String Array List
         ResultSet rs;
-        ArrayList<String> StringList = new ArrayList<String>();
+        ArrayList<String> StringList = new ArrayList<>();
         try {
             Statement st = connection.createStatement();
             rs = st.executeQuery(query);
@@ -81,6 +81,24 @@ public class Datenbank {
             System.err.println(ex);
         }
         return StringList;
+    }
+
+    public ArrayList queryMehrereBestellungen(String query) { // Datenbankabfrage mit anschließender Rückgabe String Array List
+        ResultSet rs;
+        ArrayList<Bestellungsinfo> alleBestellungen = new ArrayList<>();
+
+        try {
+            Statement st = connection.createStatement();
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                Bestellungsinfo bestellinfo = new Bestellungsinfo(Integer.parseInt(rs.getString(1)), Integer.parseInt(rs.getString(2)), Double.parseDouble(rs.getString(3)), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+                alleBestellungen.add(bestellinfo);
+            }
+        } catch (SQLException ex) {
+            connect();
+            System.err.println(ex);
+        }
+        return alleBestellungen;
     }
 
     public boolean existsInDB(String query) {
@@ -192,6 +210,27 @@ public class Datenbank {
             }
         }
         return "0";
+    }
+
+    public String getBestellungDetails(int id) throws SQLException, IOException, NoSuchAlgorithmException {
+        System.err.println(id);
+        String query = "SELECT id, benutzer, betrag, coupon, bestelldetails, anmerkung, zeit FROM bestellung WHERE id = " + id;
+        ArrayList<String> result = this.query(query, 7);
+
+        String idDB = result.get(0);
+        String benutzerIDDB = result.get(1);
+        String betragDB = result.get(2);
+        String couponDB = result.get(3);
+        String bestelldetailsDB = result.get(4);
+        String anmerkungDB = result.get(5);
+        String zeitDB = result.get(6);
+
+        query = "SELECT email FROM benutzer WHERE id = " + benutzerIDDB;
+        result = query(query, 1);
+        String email = result.get(0);
+
+        System.out.println("DB: Bestellung " + idDB + " erfolgreich geladen.");
+        return "<b>BestellID:</b> " + idDB + "" + "<br>" + "Adresse: " + getBenutzer(email).getAdresse().getVolleAdresse() + "<br>" + "<b>Betrag:</b> " + betragDB + "<br>" + "<b>Coupon:</b> " + couponDB + "<br>" + "<b>Bestelldetails:</b><br>" + bestelldetailsDB + "<br>" + "<b>Anmerkungen:</b> " + anmerkungDB + "<br>" + "<b>Bestellzeit:</b> " + zeitDB;
     }
 
     public Benutzer anmeldenBenutzer(String email, String passwort) throws SQLException, IOException, NoSuchAlgorithmException {

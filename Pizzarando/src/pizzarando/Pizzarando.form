@@ -346,8 +346,8 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_adminMouseClicked"/>
-            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_adminMouseEntered"/>
             <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_adminMouseExited"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_adminMouseEntered"/>
           </Events>
 
           <Layout>
@@ -421,8 +421,8 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_cartMouseClicked"/>
-            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_cartMouseEntered"/>
             <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_cartMouseExited"/>
+            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_cartMouseEntered"/>
           </Events>
 
           <Layout>
@@ -510,14 +510,14 @@
                               <Component id="jLabel36" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace pref="207" max="32767" attributes="0"/>
+                              <EmptySpace pref="203" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Component id="jP_user_login" max="32767" attributes="0"/>
                                   <Component id="jP_user_btn" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="224" max="32767" attributes="0"/>
+                      <EmptySpace pref="221" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -956,7 +956,7 @@
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="261" max="32767" attributes="0"/>
+                          <EmptySpace pref="215" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel84" min="-2" max="-2" attributes="0"/>
@@ -1267,12 +1267,17 @@
                                   <Component id="jLabel134" min="-2" pref="308" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="140" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txt_landing_home_aktuelleBestellung" min="-2" pref="224" max="-2" attributes="0"/>
-                              <Component id="jLabel148" min="-2" max="-2" attributes="0"/>
+                              <Component id="txt_landing_home_aktuelleBestellung" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="jLabel148" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jP_bestellung_angekommen" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1283,21 +1288,23 @@
                           <Component id="jLabel135" min="-2" pref="71" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jLabel136" min="-2" pref="71" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel7" min="-2" pref="129" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel134" min="-2" pref="116" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-                                  <Component id="jLabel148" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="txt_landing_home_aktuelleBestellung" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel148" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jP_bestellung_angekommen" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                                  <Component id="txt_landing_home_aktuelleBestellung" pref="204" max="32767" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="37" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                           <Component id="jLabel137" min="-2" pref="21" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel138" min="-2" pref="51" max="-2" attributes="0"/>
@@ -1420,7 +1427,7 @@
                       <Color blue="31" green="82" red="fa" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;p style=&quot;text-align:center;&quot;&gt;Aktuelle Bestellung:&lt;/p&gt;&lt;/html&gt;"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;p style=&quot;text-align:center;&quot;&gt;Letzte Bestellung:&lt;/p&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="txt_landing_home_aktuelleBestellung">
@@ -1429,15 +1436,72 @@
                       <Color blue="0" green="0" red="0" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Arial Rounded MT Bold" size="18" style="0"/>
+                      <Font name="Arial Rounded MT Bold" size="14" style="0"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="31" green="82" red="fa" type="rgb"/>
                     </Property>
-                    <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;p style=&quot;text-align:center;&quot;&gt;keine aktuelle Bestellung gefunden&lt;/p&gt;&lt;/html&gt;"/>
+                    <Property name="horizontalAlignment" type="int" value="2"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;p style=&quot;text-align:center;&quot;&gt;keine letzte Bestellung gefunden&lt;/p&gt;&lt;/html&gt;"/>
+                    <Property name="verticalAlignment" type="int" value="1"/>
                   </Properties>
                 </Component>
+                <Container class="javax.swing.JPanel" name="jP_bestellung_angekommen">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="44" green="96" red="fd" type="rgb"/>
+                    </Property>
+                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                      <Color id="Standardcursor"/>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_bestellung_angekommenMouseClicked"/>
+                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_bestellung_angekommenMouseExited"/>
+                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_bestellung_angekommenMouseEntered"/>
+                  </Events>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                              <Component id="jLabel106" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="22" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel106" pref="20" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JLabel" name="jLabel106">
+                      <Properties>
+                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="0" green="0" red="0" type="rgb"/>
+                        </Property>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Arial Rounded MT Bold" size="14" style="0"/>
+                        </Property>
+                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                          <Color blue="fa" green="fa" red="fa" type="rgb"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="  geliefert!"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel106MouseClicked"/>
+                        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel106MouseEntered"/>
+                      </Events>
+                    </Component>
+                  </SubComponents>
+                </Container>
               </SubComponents>
             </Container>
           </SubComponents>
@@ -1461,29 +1525,38 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <EmptySpace pref="102" max="32767" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="txt_admin_Infos_Bestellung" min="-2" pref="204" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jLabel140" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="181" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jP_landing_Admin_order" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
+                              <Component id="jLabel140" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="lbl_landing_admin_bestellinfos" min="-2" pref="446" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jP_admin_bestellung_check" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <EmptySpace pref="27" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jLabel140" min="-2" pref="71" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jP_landing_Admin_order" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="464" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txt_admin_Infos_Bestellung" pref="500" max="32767" attributes="0"/>
+                              <Component id="lbl_landing_admin_bestellinfos" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jP_admin_bestellung_check" min="-2" pref="60" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1504,379 +1577,99 @@
                     <Property name="text" type="java.lang.String" value="F&#xfc;r Lieferanten"/>
                   </Properties>
                 </Component>
-                <Container class="javax.swing.JPanel" name="jP_landing_Admin_order">
-                  <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="31" green="82" red="fa" type="rgb"/>
-                    </Property>
-                  </Properties>
+                <Container class="javax.swing.JScrollPane" name="txt_admin_Infos_Bestellung">
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
 
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
-                              <Component id="jP_landing_Admin_order_Check" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jP_landing_Admin_order_Info" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
-                              <Component id="jP_landing_Admin_order_Bestellung" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="79" max="32767" attributes="0"/>
-                              <Component id="jP_landing__Admin_order_Nr" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jP_landing_Admin_order_Check" max="32767" attributes="0"/>
-                                      <Component id="jP_landing_Admin_order_Info" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                      <Component id="jP_landing__Admin_order_Nr" alignment="1" max="32767" attributes="0"/>
-                                      <Component id="jP_landing_Admin_order_Bestellung" alignment="1" max="32767" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Container class="javax.swing.JPanel" name="jP_landing_Admin_order_Check">
+                    <Component class="javax.swing.JList" name="list_admin_bestellungen">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="63" green="bc" red="94" type="rgb"/>
+                          <Color blue="31" green="82" red="fa" type="rgb"/>
                         </Property>
                         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                            <LineBorder roundedCorners="true" thickness="3">
-                              <Color PropertyName="color" blue="63" green="bc" red="94" type="rgb"/>
+                            <LineBorder thickness="3">
+                              <Color PropertyName="color" blue="31" green="82" red="fa" type="rgb"/>
                             </LineBorder>
                           </Border>
-                        </Property>
-                        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                          <Color id="Standardcursor"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_Admin_order_CheckMouseEntered"/>
-                        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_Admin_order_CheckMouseExited"/>
-                      </Events>
-
-                      <Layout>
-                        <DimensionLayout dim="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel143" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                        </DimensionLayout>
-                        <DimensionLayout dim="1">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel143" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                        </DimensionLayout>
-                      </Layout>
-                      <SubComponents>
-                        <Component class="javax.swing.JLabel" name="jLabel143">
-                          <Properties>
-                            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                              <Color blue="63" green="bc" red="94" type="rgb"/>
-                            </Property>
-                            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                              <Image iconType="3" name="/Icons/icons8-checkmark-yes-50.png"/>
-                            </Property>
-                            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Standardcursor"/>
-                            </Property>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel143MouseEntered"/>
-                            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel143MouseExited"/>
-                          </Events>
-                        </Component>
-                      </SubComponents>
-                    </Container>
-                    <Container class="javax.swing.JPanel" name="jP_landing_Admin_order_Info">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="44" green="96" red="fd" type="rgb"/>
-                        </Property>
-                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                            <LineBorder roundedCorners="true" thickness="3">
-                              <Color PropertyName="color" blue="44" green="96" red="fd" type="rgb"/>
-                            </LineBorder>
-                          </Border>
-                        </Property>
-                        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                          <Color id="Standardcursor"/>
-                        </Property>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_Admin_order_InfoMouseClicked"/>
-                        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_Admin_order_InfoMouseEntered"/>
-                        <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_Admin_order_InfoMouseExited"/>
-                      </Events>
-
-                      <Layout>
-                        <DimensionLayout dim="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  <Component id="jLabel149" min="-2" pref="50" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                        </DimensionLayout>
-                        <DimensionLayout dim="1">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel149" alignment="0" max="32767" attributes="0"/>
-                          </Group>
-                        </DimensionLayout>
-                      </Layout>
-                      <SubComponents>
-                        <Component class="javax.swing.JLabel" name="jLabel149">
-                          <Properties>
-                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Arial Rounded MT Bold" size="14" style="1"/>
-                            </Property>
-                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                            </Property>
-                            <Property name="horizontalAlignment" type="int" value="0"/>
-                            <Property name="text" type="java.lang.String" value="Info"/>
-                          </Properties>
-                          <Events>
-                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel149MouseClicked"/>
-                            <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel149MouseEntered"/>
-                            <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel149MouseExited"/>
-                          </Events>
-                        </Component>
-                      </SubComponents>
-                    </Container>
-                    <Component class="javax.swing.JLabel" name="jP_landing_Admin_order_Bestellung">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="0" green="0" red="0" type="rgb"/>
                         </Property>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Arial Rounded MT Bold" size="35" style="0"/>
+                          <Font name="Arial Rounded MT Bold" size="18" style="1"/>
                         </Property>
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Bestellung"/>
+                        <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
+                          <StringArray count="0"/>
+                        </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_Admin_order_BestellungMouseClicked"/>
+                        <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="list_admin_bestellungenValueChanged"/>
                       </Events>
+                      <AuxValues>
+                        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JList&lt;&gt;()"/>
+                        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                      </AuxValues>
                     </Component>
-                    <Container class="javax.swing.JPanel" name="jP_landing__Admin_order_Nr">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="44" green="96" red="fd" type="rgb"/>
-                        </Property>
-                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                            <LineBorder roundedCorners="true" thickness="3">
-                              <Color PropertyName="color" blue="44" green="96" red="fd" type="rgb"/>
-                            </LineBorder>
-                          </Border>
-                        </Property>
-                      </Properties>
-
-                      <Layout>
-                        <DimensionLayout dim="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jP_landing_Admin_order_Nr_nummer" pref="60" max="32767" attributes="0"/>
-                                  <EmptySpace max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                        </DimensionLayout>
-                        <DimensionLayout dim="1">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jP_landing_Admin_order_Nr_nummer" alignment="0" pref="49" max="32767" attributes="0"/>
-                          </Group>
-                        </DimensionLayout>
-                      </Layout>
-                      <SubComponents>
-                        <Component class="javax.swing.JLabel" name="jP_landing_Admin_order_Nr_nummer">
-                          <Properties>
-                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Arial Rounded MT Bold" size="36" style="1"/>
-                            </Property>
-                            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                              <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                            </Property>
-                            <Property name="horizontalAlignment" type="int" value="0"/>
-                            <Property name="text" type="java.lang.String" value="1"/>
-                          </Properties>
-                        </Component>
-                      </SubComponents>
-                    </Container>
                   </SubComponents>
                 </Container>
-              </SubComponents>
-            </Container>
-            <Container class="javax.swing.JPanel" name="jP_landing_Admin_info">
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="card2"/>
-                </Constraint>
-              </Constraints>
-
-              <Layout>
-                <DimensionLayout dim="0">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="340" max="-2" attributes="0"/>
-                                  <Component id="jLabel150" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace min="-2" pref="213" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jP_landing_adnim_info_Back" max="32767" attributes="0"/>
-                                      <Component id="jP_landing_Admin_info_Adresse" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                          </Group>
-                          <EmptySpace min="-2" pref="213" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-                <DimensionLayout dim="1">
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel150" min="-2" pref="71" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
-                          <Component id="jP_landing_Admin_info_Adresse" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jP_landing_adnim_info_Back" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="245" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                </DimensionLayout>
-              </Layout>
-              <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel150">
+                <Component class="javax.swing.JLabel" name="lbl_landing_admin_bestellinfos">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="0" green="0" red="0" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Arial Rounded MT Bold" size="48" style="0"/>
+                      <Font name="Arial Rounded MT Bold" size="18" style="0"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="31" green="82" red="fa" type="rgb"/>
+                      <Color blue="7d" green="7d" red="7d" type="rgb"/>
                     </Property>
-                    <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="Info"/>
+                    <Property name="horizontalAlignment" type="int" value="2"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;p style=&quot;text-align:left;&quot;&gt;W&#xe4;hlen Sie eine Bestellung aus.&lt;br&gt; &lt;/p&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
-                <Container class="javax.swing.JPanel" name="jP_landing_Admin_info_Adresse">
+                <Container class="javax.swing.JPanel" name="jP_admin_bestellung_check">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                    </Property>
-                  </Properties>
-
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="lbl_ladnig_Admin_info_Adresse" pref="330" max="32767" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                              <Component id="lbl_ladnig_Admin_info_Adresse" min="-2" pref="116" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                  <SubComponents>
-                    <Component class="javax.swing.JLabel" name="lbl_ladnig_Admin_info_Adresse">
-                      <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="0" green="0" red="0" type="rgb"/>
-                        </Property>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Arial Rounded MT Bold" size="18" style="0"/>
-                        </Property>
-                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="7d" green="7d" red="7d" type="rgb"/>
-                        </Property>
-                        <Property name="horizontalAlignment" type="int" value="2"/>
-                        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;p style=&quot;text-align:left;&quot;&gt; Stra&#xdf;e: Vivaldiweg 36 &lt;br&gt; Ort: Stuttgart 70195 &lt;br&gt; Name: Benjamin Knaup &lt;br&gt; E-Mail: Benjmin.Knaup@beispiel.de &lt;br&gt; &lt;/p&gt;&lt;/html&gt;"/>
-                      </Properties>
-                    </Component>
-                  </SubComponents>
-                </Container>
-                <Container class="javax.swing.JPanel" name="jP_landing_adnim_info_Back">
-                  <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="44" green="96" red="fd" type="rgb"/>
-                    </Property>
-                    <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                      <Color id="Standardcursor"/>
+                      <Color blue="33" green="ff" red="33" type="rgb"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_adnim_info_BackMouseClicked"/>
-                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_adnim_info_BackMouseEntered"/>
-                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_adnim_info_BackMouseExited"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_admin_bestellung_checkMouseClicked"/>
                   </Events>
 
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jLabel151" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="128" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                              <Component id="jLabel151" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="16" max="32767" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="jLabel151">
+                    <Component class="javax.swing.JLabel" name="jLabel10">
                       <Properties>
-                        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="0" green="0" red="0" type="rgb"/>
+                        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                          <Image iconType="3" name="/Icons/icons8-checkmark-yes-50.png"/>
                         </Property>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Arial Rounded MT Bold" size="24" style="0"/>
-                        </Property>
-                        <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                          <Color blue="fa" green="fa" red="fa" type="rgb"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="Zur&#xfc;ck"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel151MouseClicked"/>
-                        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel151MouseEntered"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel10MouseClicked"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -1927,7 +1720,7 @@
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace pref="56" max="32767" attributes="0"/>
+                          <EmptySpace pref="49" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1952,7 +1745,7 @@
                               </Group>
                               <Component id="lbl_landing_Cart_Warenkorbbetrag" min="-2" pref="71" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="14" max="32767" attributes="0"/>
+                          <EmptySpace pref="40" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2043,7 +1836,6 @@
                           <Font name="Arial Rounded MT Bold" size="12" style="0"/>
                         </Property>
                         <Property name="rows" type="int" value="5"/>
-                        <Property name="text" type="java.lang.String" value="Extraw&#xfc;nsche:"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -2950,7 +2742,7 @@
                                   <Component id="jP_landing_Cart_kasse_main" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <EmptySpace pref="77" max="32767" attributes="0"/>
+                          <EmptySpace pref="70" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -3212,7 +3004,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                  <Component id="lbl_landing_Cart_pizza_Adresse" min="-2" pref="116" max="-2" attributes="0"/>
+                                  <Component id="lbl_landing_Cart_pizza_Adresse" min="-2" pref="142" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -3336,7 +3128,7 @@
                         <Component class="javax.swing.JLabel" name="lbl_landing_Cart_kasse_Coupon_Pr&#xfc;fen">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                              <Font name="Arial Rounded MT Bold" size="10" style="0"/>
+                              <Font name="Arial Rounded MT Bold" size="11" style="0"/>
                             </Property>
                             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -3380,7 +3172,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace pref="95" max="32767" attributes="0"/>
+                          <EmptySpace pref="88" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel92" min="-2" max="-2" attributes="0"/>
@@ -3418,7 +3210,7 @@
                           <Component id="jLabel91" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jP_landing_Cart_ordermore" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="200" max="32767" attributes="0"/>
+                          <EmptySpace pref="304" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -3462,26 +3254,26 @@
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_Cart_ordermoreMouseClicked"/>
-                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_Cart_ordermoreMouseEntered"/>
                     <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_Cart_ordermoreMouseExited"/>
+                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_Cart_ordermoreMouseEntered"/>
                   </Events>
 
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="89" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="144" max="-2" attributes="0"/>
                               <Component id="jLabel89" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
+                              <EmptySpace pref="144" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                               <Component id="jLabel89" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="16" max="32767" attributes="0"/>
+                              <EmptySpace pref="17" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -3498,7 +3290,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="fa" green="fa" red="fa" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Mehr Bestellen"/>
+                        <Property name="text" type="java.lang.String" value="Home"/>
                       </Properties>
                       <Events>
                         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel89MouseClicked"/>
@@ -3562,7 +3354,7 @@
                                                   <Component id="cB_bearbeiten_Salami" alignment="1" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
-                                          <EmptySpace pref="143" max="32767" attributes="0"/>
+                                          <EmptySpace pref="136" max="32767" attributes="0"/>
                                           <Component id="jLabel142" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="jP_landing_Cart_bearbeiten_Minus" min="-2" max="-2" attributes="0"/>
@@ -3573,7 +3365,7 @@
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="jP_landing_Cart_bearbeiten_Back" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace pref="328" max="32767" attributes="0"/>
+                                          <EmptySpace pref="321" max="32767" attributes="0"/>
                                           <Component id="jP_landing_Cart_bearbeiten_toCart" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -4051,9 +3843,9 @@
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jP_Bestellen_funghi" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="100" max="32767" attributes="0"/>
+                                  <EmptySpace pref="97" max="32767" attributes="0"/>
                                   <Component id="jP_Bestellen_margherita" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="101" max="32767" attributes="0"/>
+                                  <EmptySpace pref="97" max="32767" attributes="0"/>
                                   <Component id="jP_Bestellen_pepperoni" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -4797,7 +4589,7 @@
                                       </Group>
                                       <Group type="102" attributes="0">
                                           <Component id="jP_landing_Bestellen_salami_Back" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace pref="249" max="32767" attributes="0"/>
+                                          <EmptySpace pref="242" max="32767" attributes="0"/>
                                           <Component id="jP_landing_Bestellen_salami_toCart" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -5295,7 +5087,7 @@
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jP_landing_Bestellen_speciale_Back" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="249" max="32767" attributes="0"/>
+                                  <EmptySpace pref="242" max="32767" attributes="0"/>
                                   <Component id="jP_landing_Bestellen_speciale_toCart" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -5796,7 +5588,7 @@
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jP_landing_Bestellen_diavolo_Back" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="249" max="32767" attributes="0"/>
+                                  <EmptySpace pref="242" max="32767" attributes="0"/>
                                   <Component id="jP_landing_Bestellen_diavolo_toCart" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -6296,7 +6088,7 @@
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jP_landing_Bestellen_stagioni_Back" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="249" max="32767" attributes="0"/>
+                                  <EmptySpace pref="242" max="32767" attributes="0"/>
                                   <Component id="jP_landing_Bestellen_stagioni_toCart" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -6796,7 +6588,7 @@
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jP_landing_Bestellen_rucula_Back" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="249" max="32767" attributes="0"/>
+                                  <EmptySpace pref="242" max="32767" attributes="0"/>
                                   <Component id="jP_landing_Bestellen_rucula_toCart" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -7297,7 +7089,7 @@
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jP_landing_Bestellen_caprese_Back" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="249" max="32767" attributes="0"/>
+                                  <EmptySpace pref="242" max="32767" attributes="0"/>
                                   <Component id="jP_landing_Bestellen_caprese_toCart" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -7804,7 +7596,7 @@
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
                                           <Component id="jP_landing_Bestellen_funghi_Back" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace pref="249" max="32767" attributes="0"/>
+                                          <EmptySpace pref="242" max="32767" attributes="0"/>
                                           <Component id="jP_landing_Bestellen_funghi_toCart" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -8303,7 +8095,7 @@
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jP_landing_Bestellen_margherita_Back" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="249" max="32767" attributes="0"/>
+                                  <EmptySpace pref="242" max="32767" attributes="0"/>
                                   <Component id="jP_landing_Bestellen_margherita_toCart" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
@@ -8802,7 +8594,7 @@
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jP_landing_pepperoni_salami_Back" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="249" max="32767" attributes="0"/>
+                                  <EmptySpace pref="242" max="32767" attributes="0"/>
                                   <Component id="jP_landing_pepperoni_salami_toCart" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">

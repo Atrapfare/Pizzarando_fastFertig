@@ -15,7 +15,7 @@ public class Bestellung {
 
     private final Warenkorb warenkorb;
     private final Benutzer benutzer;
-    private double betrag;
+    private final double betrag;
     private final String coupon;
     private final String anmerkung;
     private final String bestellzeit;
@@ -50,17 +50,48 @@ public class Bestellung {
 
         for (int i = 0; i < warenkorb.getWarenkorbItems().size(); i++) {
             if (!warenkorb.getWarenkorbItems().get(i).getTyp().equals("noch frei")) {
-                bestellDetails += "Pizzaslot " + slot + ": " + warenkorb.getWarenkorbItems().get(i).getAnzahl() + "x " + warenkorb.getWarenkorbItems().get(i).getTyp() + "<br>";
+                String toppingCode = "";
+                if (warenkorb.getWarenkorbItems().get(i).isSalami()) {
+                    toppingCode += "1";
+                } else {
+                    toppingCode += "0";
+                }
+
+                if (warenkorb.getWarenkorbItems().get(i).isZwiebeln()) {
+                    toppingCode += "1";
+                } else {
+                    toppingCode += "0";
+                }
+
+                if (warenkorb.getWarenkorbItems().get(i).isRucula()) {
+                    toppingCode += "1";
+                } else {
+                    toppingCode += "0";
+                }
+
+                if (warenkorb.getWarenkorbItems().get(i).isKaese()) {
+                    toppingCode += "1";
+                } else {
+                    toppingCode += "0";
+                }
+
+                if (warenkorb.getWarenkorbItems().get(i).isTomatensoße()) {
+                    toppingCode += "1";
+                } else {
+                    toppingCode += "0";
+                }
+
+                bestellDetails += "Pizzaslot " + slot + ": " + warenkorb.getWarenkorbItems().get(i).getAnzahl() + "x " + warenkorb.getWarenkorbItems().get(i).getTyp() + " (Toppingcode: " + toppingCode + ") " + "<br>";
                 slot++;
             }
         }
 
         return bestellDetails;
     }
-    
+
     public void speichereBestellung() throws IOException {
         FileWriter myWriter = new FileWriter("bestellung.txt");
-        myWriter.write(this.bestellID);
+        myWriter.write(Integer.toString(bestellID));
         myWriter.close();
         System.out.println("LOKAL: Bestellung erfolgreich gesichert.");
     }
@@ -68,6 +99,4 @@ public class Bestellung {
     public int getBestellID() {
         return bestellID;
     }
-    
-    
 }
