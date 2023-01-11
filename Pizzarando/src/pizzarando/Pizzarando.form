@@ -956,7 +956,7 @@
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="222" max="32767" attributes="0"/>
+                          <EmptySpace pref="261" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel84" min="-2" max="-2" attributes="0"/>
@@ -1232,13 +1232,8 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="345" max="-2" attributes="0"/>
-                          <Component id="jLabel139" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="104" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jLabel135" min="-2" max="-2" attributes="0"/>
@@ -1249,26 +1244,35 @@
                                   <EmptySpace min="-2" pref="229" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="jLabel7" min="-2" pref="208" max="-2" attributes="0"/>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="jLabel134" min="-2" pref="308" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jLabel141" min="-2" pref="574" max="-2" attributes="0"/>
                                       <Component id="jLabel137" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel136" alignment="1" min="-2" pref="574" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="79" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jLabel139" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="365" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
-                      <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="124" max="32767" attributes="0"/>
-                              <Component id="jLabel136" min="-2" pref="574" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="71" max="-2" attributes="0"/>
+                                  <Component id="jLabel7" min="-2" pref="208" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                                  <Component id="jLabel134" min="-2" pref="308" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
+                          <EmptySpace pref="140" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="txt_landing_home_aktuelleBestellung" min="-2" pref="224" max="-2" attributes="0"/>
+                              <Component id="jLabel148" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="110" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1277,30 +1281,29 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel135" min="-2" pref="71" max="-2" attributes="0"/>
-                          <EmptySpace pref="134" max="32767" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jLabel136" min="-2" pref="71" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jLabel7" alignment="0" min="-2" pref="129" max="-2" attributes="0"/>
-                              <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jLabel7" min="-2" pref="129" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jLabel134" min="-2" pref="116" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
+                                  <Component id="jLabel148" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="txt_landing_home_aktuelleBestellung" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel141" min="-2" pref="71" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
+                          <EmptySpace pref="37" max="32767" attributes="0"/>
                           <Component id="jLabel137" min="-2" pref="21" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel138" min="-2" pref="51" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel139" min="-2" pref="21" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="136" max="-2" attributes="0"/>
-                              <Component id="jLabel136" min="-2" pref="71" max="-2" attributes="0"/>
-                              <EmptySpace pref="420" max="32767" attributes="0"/>
-                          </Group>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1405,19 +1408,34 @@
                     <Property name="toolTipText" type="java.lang.String" value=""/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel141">
+                <Component class="javax.swing.JLabel" name="jLabel148">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="0" green="0" red="0" type="rgb"/>
                     </Property>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Arial Rounded MT Bold" size="12" style="0"/>
+                      <Font name="Arial Rounded MT Bold" size="24" style="0"/>
                     </Property>
                     <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="31" green="82" red="fa" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;p style=&quot;text-align:center;&quot;&gt;Jede Pizza kostet standartm&#xe4;&#xdf;ig 7&#x20ac;. Je Pizzasorte sind unterschiedliche Toppings ausgew&#xe4;hlt, welche zus&#xe4;tzlich ver&#xe4;ndert werden k&#xf6;nnen. Jedes Topping kostet 0,50&#x20ac;. Der Preis je Pizza wird also mit 7&#x20ac; + Anzahl ausgew&#xe4;hlter Toppings x 0,50&#x20ac; berechnet.&lt;/p&gt;&lt;/html&gt;"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;p style=&quot;text-align:center;&quot;&gt;Aktuelle Bestellung:&lt;/p&gt;&lt;/html&gt;"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="txt_landing_home_aktuelleBestellung">
+                  <Properties>
+                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="0" green="0" red="0" type="rgb"/>
+                    </Property>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Arial Rounded MT Bold" size="18" style="0"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="31" green="82" red="fa" type="rgb"/>
+                    </Property>
+                    <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;p style=&quot;text-align:center;&quot;&gt;keine aktuelle Bestellung gefunden&lt;/p&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -3000,7 +3018,7 @@
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                              <Component id="cB_Cart_Coupon" min="-2" max="-2" attributes="0"/>
+                                              <Component id="cB_Cart_Bar" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace min="0" pref="55" max="32767" attributes="0"/>
@@ -3031,7 +3049,7 @@
                                   </Group>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="cB_Cart_Coupon" min="-2" max="-2" attributes="0"/>
+                              <Component id="cB_Cart_Bar" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
                               <Component id="jP_landing_Cart_kasse_Adresse" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -3249,7 +3267,7 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="txt_landing_kasse_coupon">
                     </Component>
-                    <Component class="javax.swing.JCheckBox" name="cB_Cart_Coupon">
+                    <Component class="javax.swing.JCheckBox" name="cB_Cart_Bar">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Arial Rounded MT Bold" size="18" style="0"/>
@@ -3261,7 +3279,7 @@
                         <Property name="actionCommand" type="java.lang.String" value="Ich best&#xe4;tige dass ich das angegebene Geld bar mit mir trage"/>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cB_Cart_CouponActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cB_Cart_BarActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel98">
@@ -3400,7 +3418,7 @@
                           <Component id="jLabel91" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jP_landing_Cart_ordermore" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="199" max="32767" attributes="0"/>
+                          <EmptySpace pref="200" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

@@ -4,6 +4,9 @@
  */
 package pizzarando;
 
+import java.io.FileWriter;
+import java.io.IOException;
+
 /**
  *
  * @author dominikknaup
@@ -15,22 +18,25 @@ public class Bestellung {
     private double betrag;
     private final String coupon;
     private final String anmerkung;
+    private final String bestellzeit;
+    private int bestellID;
 
-    public Bestellung(Warenkorb warenkorb, Benutzer benutzer, double betrag, String coupon, String anmerkung, Datenbank db) {
+    public Bestellung(Warenkorb warenkorb, Benutzer benutzer, double betrag, String coupon, String anmerkung, String bestellzeit, Datenbank db) {
         this.warenkorb = warenkorb;
         this.benutzer = benutzer;
         this.coupon = coupon;
         this.anmerkung = anmerkung;
         this.betrag = betrag;
+        this.bestellzeit = bestellzeit;
         sendeBestellung(db);
     }
 
     private boolean sendeBestellung(Datenbank db) {
         String bestellDetails = generiereBestelldetails();
-        String query = "INSERT INTO bestellung (benutzer, betrag, coupon, bestelldetails, anmerkung) VALUES ('" + benutzer.getId() + "', '" + this.betrag + "', '" + this.coupon + "', '" + bestellDetails + "', '" + this.anmerkung + "')";
+        String query = "INSERT INTO bestellung (benutzer, betrag, coupon, bestelldetails, anmerkung, zeit) VALUES ('" + benutzer.getId() + "', '" + this.betrag + "', '" + this.coupon + "', '" + bestellDetails + "', '" + this.anmerkung + "', '" + this.bestellzeit + "')";
         int bestellId = db.update(query);
         if (bestellId != 0) {
-
+            this.bestellID = bestellId;
             System.out.println("DB: Eine neue Bestellung mit der ID " + bestellId + " wurde angelegt: " + this.benutzer.getEmail() + ", " + this.betrag + ", " + this.coupon);
             return true;
         } else {
@@ -51,4 +57,17 @@ public class Bestellung {
 
         return bestellDetails;
     }
+    
+    public void speichereBestellung() throws IOException {
+        FileWriter myWriter = new FileWriter("bestellung.txt");
+        myWriter.write(this.bestellID);
+        myWriter.close();
+        System.out.println("LOKAL: Bestellung erfolgreich gesichert.");
+    }
+
+    public int getBestellID() {
+        return bestellID;
+    }
+    
+    
 }

@@ -1,6 +1,7 @@
 package pizzarando;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
@@ -131,8 +132,7 @@ public class Datenbank {
             return null;
         }
     }
-    
-    
+
     public Benutzer getBenutzerByHash(String emailHash) throws SQLException, IOException, NoSuchAlgorithmException {
         String query = "SELECT id FROM benutzer WHERE emailHash = " + "\"" + emailHash + "\"";
 
@@ -171,11 +171,27 @@ public class Datenbank {
                 email = myReader.nextLine();
             }
             if (!email.equals("")) {
-                System.out.println("LOKAL: Emailadresse erfolgreich ausgelesen.");
+                System.out.println("LOKAL: Emailadresse " + email + " erfolgreich ausgelesen.");
                 return email;
             }
         }
         return null;
+    }
+
+    public String ladeBestellungLokal() throws FileNotFoundException {
+        File myObj = new File("bestellung.txt");
+        if (myObj.exists()) {
+            Scanner myReader = new Scanner(myObj);
+            String bestellungsId = "";
+            while (myReader.hasNextLine()) {
+                bestellungsId = myReader.nextLine();
+            }
+            if (!bestellungsId.equals("")) {
+                System.out.println("LOKAL: Bestellung " + bestellungsId + " erfolgreich ausgelesen.");
+                return bestellungsId;
+            }
+        }
+        return "0";
     }
 
     public Benutzer anmeldenBenutzer(String email, String passwort) throws SQLException, IOException, NoSuchAlgorithmException {
