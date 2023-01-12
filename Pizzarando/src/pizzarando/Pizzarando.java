@@ -28,8 +28,6 @@ public class Pizzarando extends javax.swing.JFrame {
     Color hover_del = new Color(168, 94, 89);
     Color del = new Color(170, 74, 68);
     Color disabled = new Color(125, 125, 125);
-    Color check = new Color(148, 188, 99);
-    Color hover_check = new Color(170, 217, 113);
 
     public int orderSalami = 1, orderSpeciale = 1, orderDiavolo = 1, orderStagioni = 1, orderRucula = 1, orderCaprese = 1, orderFunghi = 1, orderMargherita = 1, orderPepperoni = 1, bearbeiten = 1;
     private boolean jP_landing_Cart_kasse_Order_enable = false, isLogin;
