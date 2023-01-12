@@ -1367,7 +1367,7 @@
                       <Color blue="7d" green="7d" red="7d" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="Dieses Pizza-Bestell Programm wurde im Rahmen des CT-Projektes von"/>
+                    <Property name="text" type="java.lang.String" value="Dieses Pizza Bestellprogramm wurde im Rahmen des CT-Projektes von"/>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
                   </Properties>
                 </Component>
@@ -2726,15 +2726,15 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="245" max="-2" attributes="0"/>
-                                  <Component id="jLabel80" min="-2" pref="279" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="jP_landing_Cart_kasse_main" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="222" max="-2" attributes="0"/>
+                                  <Component id="jLabel80" min="-2" pref="279" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
-                          <EmptySpace pref="70" max="32767" attributes="0"/>
+                          <EmptySpace pref="63" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -2763,7 +2763,7 @@
                       <Color blue="31" green="82" red="fa" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
-                    <Property name="text" type="java.lang.String" value="Warenkorb"/>
+                    <Property name="text" type="java.lang.String" value="Kasse"/>
                   </Properties>
                 </Component>
                 <Container class="javax.swing.JPanel" name="jP_landing_Cart_kasse_main">
@@ -2773,7 +2773,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="jP_landing_Cart_kasse_Adresse" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="131" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                                   <Component id="jScrollPane1" min="-2" pref="295" max="-2" attributes="0"/>
@@ -3068,7 +3068,7 @@
                         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="44" green="96" red="fd" type="rgb"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="Hiermit best&#xe4;tige ich, den Barbetrag dem Lieferanten zu &#xfc;bergeben"/>
+                        <Property name="text" type="java.lang.String" value="Ich best&#xe4;tige den Lieferanten bei Erhalt meiner Bestellung bar zu bezahlen"/>
                         <Property name="actionCommand" type="java.lang.String" value="Ich best&#xe4;tige dass ich das angegebene Geld bar mit mir trage"/>
                       </Properties>
                       <Events>
@@ -8618,7 +8618,7 @@
                               <Group type="102" alignment="1" attributes="0">
                                   <Component id="jP_landing_pepperoni_salami_Back" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace pref="242" max="32767" attributes="0"/>
-                                  <Component id="jP_landing_pepperoni_salami_toCart" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jP_landing_Bestellen_pepperoniSalami_toCart" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
@@ -8679,7 +8679,7 @@
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jP_landing_pepperoni_salami_Back" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="jP_landing_pepperoni_salami_toCart" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jP_landing_Bestellen_pepperoniSalami_toCart" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
                       </Group>
@@ -8835,7 +8835,7 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="jP_landing_pepperoni_salami_toCart">
+                <Container class="javax.swing.JPanel" name="jP_landing_Bestellen_pepperoniSalami_toCart">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="44" green="96" red="fd" type="rgb"/>
@@ -8845,9 +8845,9 @@
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_pepperoni_salami_toCartMouseClicked"/>
-                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_pepperoni_salami_toCartMouseExited"/>
-                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_pepperoni_salami_toCartMouseEntered"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_Bestellen_pepperoniSalami_toCartMouseClicked"/>
+                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_Bestellen_pepperoniSalami_toCartMouseExited"/>
+                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jP_landing_Bestellen_pepperoniSalami_toCartMouseEntered"/>
                   </Events>
 
                   <Layout>

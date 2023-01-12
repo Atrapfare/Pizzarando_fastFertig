@@ -1,17 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pizzarando;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- *
- * @author dominikknaup
- */
 public class Passwort {
+
     private String hashedPasswort;
 
     public Passwort(String passwort, boolean hash) throws NoSuchAlgorithmException {
@@ -29,7 +22,7 @@ public class Passwort {
     public void setHashedPasswort(String hashedPasswort) {
         this.hashedPasswort = hashedPasswort;
     }
-    
+
     public String hash(String passwort) throws NoSuchAlgorithmException {
         // Create MessageDigest instance for MD5
         MessageDigest md = MessageDigest.getInstance("MD5");

@@ -94,7 +94,6 @@ public class Benutzer {
         this.id = id;
     }
 
-    
     public int getId() {
         return id;
     }

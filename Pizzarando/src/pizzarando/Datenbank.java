@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,7 +14,7 @@ public class Datenbank {
     private final String user;
     private final String passwort;
     private final String port;
-    public Connection connection;
+    private Connection connection;
 
     public Datenbank() {
         host = "mysql31.1blu.de";

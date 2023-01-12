@@ -1,17 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package pizzarando;
 
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 
-/**
- *
- * @author dominikknaup
- */
 public class Tutorial extends javax.swing.JFrame {
 
     Color hover_main = new Color(255, 164, 92);
@@ -19,12 +9,6 @@ public class Tutorial extends javax.swing.JFrame {
 
     public Tutorial() {
         initComponents();
-        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-
-        int w = this.getSize().width;
-        int h = this.getSize().height;
-        int x = (dim.width - w) / 2;
-        int y = (dim.height - h) / 2;
     }
 
     /**

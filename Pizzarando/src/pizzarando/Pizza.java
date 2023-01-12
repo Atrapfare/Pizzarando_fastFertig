@@ -1,13 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pizzarando;
 
-/**
- *
- * @author dominikknaup
- */
 public class Pizza {
 
     // Objekt wird erstellt, sobald Pizza in Bestellscreen "zum Warenkorb" hinzugefügt wurde
@@ -15,7 +7,7 @@ public class Pizza {
     private String typ;
     private int anzahl;
     private int toppingAnzahl;
-    
+
     private boolean tomatensoße;
     private boolean kaese;
     private boolean rucula;
@@ -70,7 +62,7 @@ public class Pizza {
     public boolean isZwiebeln() {
         return zwiebeln;
     }
-    
+
     private void berechneToppingAnzahl() {
         int toppingAnzahl = 0;
         if (tomatensoße) {
@@ -94,7 +86,7 @@ public class Pizza {
     public int getToppingAnzahl() {
         return toppingAnzahl;
     }
-    
+
     public double berechnePizzaPreis() {
         berechneToppingAnzahl();
         return 7 + (toppingAnzahl * 0.5);

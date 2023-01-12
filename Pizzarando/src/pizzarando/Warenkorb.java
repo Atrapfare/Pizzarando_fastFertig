@@ -1,42 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package pizzarando;
 
 import java.util.ArrayList;
 
-/**
- *
- * @author dominikknaup
- */
 public class Warenkorb {
 
-    private ArrayList<Pizza> warenkorb;
+    private ArrayList<Pizza> warenkorbInhalt;
     private String anmerkungen;
     private double preis;
 
     public Warenkorb(Pizza leererPizzSlot) {
-        this.warenkorb = new ArrayList<>();
+        this.warenkorbInhalt = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            this.warenkorb.add(leererPizzSlot);
+            this.warenkorbInhalt.add(leererPizzSlot);
         }
         this.preis = 0;
     }
 
     public int addPizza(Pizza pizza) {
         boolean voll = true;
-        for (int i = 0; i < warenkorb.size(); i++) {
-            if (warenkorb.get(i).getTyp().equals("noch frei")) {
+        for (int i = 0; i < warenkorbInhalt.size(); i++) {
+            if (warenkorbInhalt.get(i).getTyp().equals("noch frei")) {
                 voll = false;
             }
         }
         if (voll) {
             System.out.println("Pizza nicht hinzugefügt.");
         } else {
-            for (int i = 0; i < warenkorb.size(); i++) {
-                if (warenkorb.get(i).getTyp().equals("noch frei")) {
-                    warenkorb.set(i, pizza);
+            for (int i = 0; i < warenkorbInhalt.size(); i++) {
+                if (warenkorbInhalt.get(i).getTyp().equals("noch frei")) {
+                    warenkorbInhalt.set(i, pizza);
                     System.out.println("Pizza " + pizza.getTyp() + " wurde dem Warenkorb an Stelle " + (i + 1) + " hinzugefügt.");
                     return i;
                 }
@@ -46,15 +38,15 @@ public class Warenkorb {
     }
 
     public ArrayList<Pizza> getWarenkorbItems() {
-        return warenkorb;
+        return warenkorbInhalt;
     }
 
-    public void setWarenkorb(ArrayList<Pizza> warenkorb) {
-        this.warenkorb = warenkorb;
+    public void setWarenkorbInhalt(ArrayList<Pizza> warenkorbInhalt) {
+        this.warenkorbInhalt = warenkorbInhalt;
     }
 
     public void setPizza(Pizza pizza, int slot) {
-        this.warenkorb.set(slot, pizza);
+        this.warenkorbInhalt.set(slot, pizza);
     }
 
     public String getAnmerkungen() {
@@ -73,10 +65,10 @@ public class Warenkorb {
     }
 
     public boolean isLeer() {
-        if (warenkorb.get(0).getTyp().equals("noch frei")) {
-            if (warenkorb.get(1).getTyp().equals("noch frei")) {
-                if (warenkorb.get(2).getTyp().equals("noch frei")) {
-                    if (warenkorb.get(3).getTyp().equals("noch frei")) {
+        if (warenkorbInhalt.get(0).getTyp().equals("noch frei")) {
+            if (warenkorbInhalt.get(1).getTyp().equals("noch frei")) {
+                if (warenkorbInhalt.get(2).getTyp().equals("noch frei")) {
+                    if (warenkorbInhalt.get(3).getTyp().equals("noch frei")) {
                         return true;
                     }
                 }
@@ -87,8 +79,8 @@ public class Warenkorb {
     }
 
     public int getNaechsterFreierSlot() {
-        for (int i = 0; i < warenkorb.size(); i++) {
-            if (warenkorb.get(i).getTyp().equals("noch frei")) {
+        for (int i = 0; i < warenkorbInhalt.size(); i++) {
+            if (warenkorbInhalt.get(i).getTyp().equals("noch frei")) {
                 return i;
             }
         }
