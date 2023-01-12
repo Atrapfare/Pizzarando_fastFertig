@@ -94,7 +94,7 @@
           <Color blue="7d" green="7d" red="7d" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;p style=&quot;text-align:center;&quot;&gt; Jede Pizza kostet standartm&#xe4;&#xdf;ig 7&#x20ac;.&lt;br&gt;Je nach Pizzasorte sind unterschiedliche Toppings ausgew&#xe4;hlt, welche zus&#xe4;tzlich ver&#xe4;ndert werden k&#xf6;nnen.&lt;br&gt;Jedes Topping kostet extra 0,50&#x20ac;. Der Preis je Pizza wird also mit 7&#x20ac; + Anzahl ausgew&#xe4;hlter Toppings x 0,50&#x20ac; berechnet. Aufgrund der Bestellmenge haben Sie 4 Pizzaslots zur Verf&#xfc;gung&lt;/p&gt;&lt;/html&gt;"/>
+        <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;p style=&quot;text-align:center;&quot;&gt; Jede Pizza hat einen Grundpreis von 7&#x20ac;.&lt;br&gt;Je nach Pizzasorte sind standartm&#xf6;&#xdf;ig Toppings ausgew&#xe4;hlt, welche ver&#xe4;ndert werden k&#xf6;nnen - Standarttoppings k&#xf6;nnen logischerweise nicht ge&#xe4;ndert werden.&lt;br&gt;Jedes ausgew&#xe4;hlte Topping kostet 0,50&#x20ac; extra. Der Preis je Pizza wird also mit 7&#x20ac; + Anzahl ausgew&#xe4;hlter Toppings x 0,50&#x20ac; berechnet.&lt;/p&gt;&lt;/html&gt;"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="jP_landing_Tutorial_verstanden">

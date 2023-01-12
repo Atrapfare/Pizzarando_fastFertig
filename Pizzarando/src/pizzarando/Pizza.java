@@ -95,5 +95,8 @@ public class Pizza {
         return toppingAnzahl;
     }
     
-    
+    public double berechnePizzaPreis() {
+        berechneToppingAnzahl();
+        return 7 + (toppingAnzahl * 0.5);
+    }
 }

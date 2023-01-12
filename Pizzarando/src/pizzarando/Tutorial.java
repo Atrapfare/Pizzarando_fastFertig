@@ -55,7 +55,7 @@ public class Tutorial extends javax.swing.JFrame {
         lbl_landing_Tutorial_Text.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         lbl_landing_Tutorial_Text.setForeground(new java.awt.Color(125, 125, 125));
         lbl_landing_Tutorial_Text.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbl_landing_Tutorial_Text.setText("<html><p style=\"text-align:center;\"> Jede Pizza kostet standartmäßig 7€.<br>Je nach Pizzasorte sind unterschiedliche Toppings ausgewählt, welche zusätzlich verändert werden können.<br>Jedes Topping kostet extra 0,50€. Der Preis je Pizza wird also mit 7€ + Anzahl ausgewählter Toppings x 0,50€ berechnet. Aufgrund der Bestellmenge haben Sie 4 Pizzaslots zur Verfügung</p></html>");
+        lbl_landing_Tutorial_Text.setText("<html><p style=\"text-align:center;\"> Jede Pizza hat einen Grundpreis von 7€.<br>Je nach Pizzasorte sind standartmößig Toppings ausgewählt, welche verändert werden können - Standarttoppings können logischerweise nicht geändert werden.<br>Jedes ausgewählte Topping kostet 0,50€ extra. Der Preis je Pizza wird also mit 7€ + Anzahl ausgewählter Toppings x 0,50€ berechnet.</p></html>");
 
         jP_landing_Tutorial_verstanden.setBackground(new java.awt.Color(253, 150, 68));
         jP_landing_Tutorial_verstanden.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -208,11 +208,7 @@ public class Tutorial extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel135;
-    private javax.swing.JLabel jLabel69;
-    private javax.swing.JLabel jLabel70;
     private javax.swing.JLabel jLabel71;
-    private javax.swing.JPanel jP_landing_Cart_kasse_Back;
-    private javax.swing.JPanel jP_landing_Cart_kasse_Back1;
     private javax.swing.JPanel jP_landing_Tutorial_verstanden;
     private javax.swing.JLabel lbl_landing_Tutorial_Text;
     // End of variables declaration//GEN-END:variables

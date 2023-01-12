@@ -1,10 +1,11 @@
 package pizzarando;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -83,7 +84,7 @@ public class Datenbank {
         return StringList;
     }
 
-    public ArrayList queryMehrereBestellungen(String query) { // Datenbankabfrage mit anschließender Rückgabe String Array List
+    public ArrayList queryMehrereBestellungen(String query) { // Datenbankabfrage mit anschließender Rückgabe Bestellinfo ArrayList
         ResultSet rs;
         ArrayList<Bestellungsinfo> alleBestellungen = new ArrayList<>();
 
@@ -196,22 +197,6 @@ public class Datenbank {
         return null;
     }
 
-    public String ladeBestellungLokal() throws FileNotFoundException {
-        File myObj = new File("bestellung.txt");
-        if (myObj.exists()) {
-            Scanner myReader = new Scanner(myObj);
-            String bestellungsId = "";
-            while (myReader.hasNextLine()) {
-                bestellungsId = myReader.nextLine();
-            }
-            if (!bestellungsId.equals("")) {
-                System.out.println("LOKAL: Bestellung " + bestellungsId + " erfolgreich ausgelesen.");
-                return bestellungsId;
-            }
-        }
-        return "0";
-    }
-
     public String getBestellungDetails(int id) throws SQLException, IOException, NoSuchAlgorithmException {
         System.err.println(id);
         String query = "SELECT id, benutzer, betrag, coupon, bestelldetails, anmerkung, zeit FROM bestellung WHERE id = " + id;
@@ -231,6 +216,17 @@ public class Datenbank {
 
         System.out.println("DB: Bestellung " + idDB + " erfolgreich geladen.");
         return "<b>BestellID:</b> " + idDB + "" + "<br>" + "Adresse: " + getBenutzer(email).getAdresse().getVolleAdresse() + "<br>" + "<b>Betrag:</b> " + betragDB + "<br>" + "<b>Coupon:</b> " + couponDB + "<br>" + "<b>Bestelldetails:</b><br>" + bestelldetailsDB + "<br>" + "<b>Anmerkungen:</b> " + anmerkungDB + "<br>" + "<b>Bestellzeit:</b> " + zeitDB;
+    }
+
+    public Bestellungsinfo getLetzteBestellungsinfo(Benutzer angemeldeterBenutzer) {
+        String query = "SELECT id, benutzer, betrag, coupon, bestelldetails, anmerkung, zeit, fertig FROM bestellung WHERE benutzer = " + angemeldeterBenutzer.getId();
+        ArrayList<Bestellungsinfo> bestellungen = queryMehrereBestellungen(query);
+
+        if (!bestellungen.isEmpty()) {
+            Bestellungsinfo letzteBestellungsinfo = bestellungen.get(bestellungen.size() - 1);
+            return letzteBestellungsinfo;
+        }
+        return null;
     }
 
     public Benutzer anmeldenBenutzer(String email, String passwort) throws SQLException, IOException, NoSuchAlgorithmException {

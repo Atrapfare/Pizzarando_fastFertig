@@ -4,9 +4,6 @@
  */
 package pizzarando;
 
-import java.io.FileWriter;
-import java.io.IOException;
-
 /**
  *
  * @author dominikknaup
@@ -87,13 +84,6 @@ public class Bestellung {
         }
 
         return bestellDetails;
-    }
-
-    public void speichereBestellung() throws IOException {
-        FileWriter myWriter = new FileWriter("bestellung.txt");
-        myWriter.write(Integer.toString(bestellID));
-        myWriter.close();
-        System.out.println("LOKAL: Bestellung erfolgreich gesichert.");
     }
 
     public int getBestellID() {

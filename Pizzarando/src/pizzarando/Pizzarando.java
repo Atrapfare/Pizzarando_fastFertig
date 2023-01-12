@@ -1,17 +1,17 @@
 package pizzarando;
 
 import java.awt.Color;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
@@ -42,8 +42,8 @@ public class Pizzarando extends javax.swing.JFrame {
 
     private double warenkorbGesamtBetrag = 0;
     private double kassenGesamtBetrag = 0;
-
-    private int aktuelleBestellungsId = 0;
+    private boolean couponHinzugefügt = false;
+    private boolean couponWarningVerstanden = false;
     private Bestellungsinfo aktuellAusgewählteBestellungImAdminMenu;
 
     private ArrayList<Bestellungsinfo> alleNochOffenenBestellungen = new ArrayList();
@@ -52,6 +52,9 @@ public class Pizzarando extends javax.swing.JFrame {
 
         initComponents();
         customizeGUI();
+
+        ImageIcon img = new ImageIcon("/Img/logo -125.png");
+        this.setIconImage(img.getImage());
 
         status_Home(true);
         status_Bestellen(false);
@@ -69,10 +72,6 @@ public class Pizzarando extends javax.swing.JFrame {
             if ((angemeldeterBenutzer = db.getBenutzerByHash(db.ladeEmailHashLokal())) != null) {
                 status_login(true);
                 updateGUI();
-                if ((aktuelleBestellungsId = Integer.parseInt(db.ladeBestellungLokal())) != 0) {
-                    txt_landing_home_aktuelleBestellung.setText("<html><p style=\"text-align:left;\">" + db.getBestellungDetails(aktuelleBestellungsId) + "</p></html>");
-
-                }
                 aktualisiereHome();
             }
         } catch (IOException ex) {
@@ -329,30 +328,27 @@ public class Pizzarando extends javax.swing.JFrame {
         jP_landing_Home_main = new javax.swing.JPanel();
         jLabel134 = new javax.swing.JLabel();
         jLabel135 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel136 = new javax.swing.JLabel();
         jLabel137 = new javax.swing.JLabel();
         jLabel138 = new javax.swing.JLabel();
         jLabel139 = new javax.swing.JLabel();
         jLabel148 = new javax.swing.JLabel();
         txt_landing_home_aktuelleBestellung = new javax.swing.JLabel();
-        jP_bestellung_angekommen = new javax.swing.JPanel();
-        jLabel106 = new javax.swing.JLabel();
         jP_landing_Admin = new javax.swing.JPanel();
         jP_landing_Admin_main = new javax.swing.JPanel();
         jLabel140 = new javax.swing.JLabel();
         txt_admin_Infos_Bestellung = new javax.swing.JScrollPane();
         list_admin_bestellungen = new javax.swing.JList<>();
         lbl_landing_admin_bestellinfos = new javax.swing.JLabel();
-        jP_admin_bestellung_check = new javax.swing.JPanel();
+        jP_admin_bestellung_aktualisieren = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
+        jP_admin_bestellung_check = new javax.swing.JPanel();
+        jLabel46 = new javax.swing.JLabel();
         jP_landing_Cart = new javax.swing.JPanel();
         jP_landing_Cart_main = new javax.swing.JPanel();
         jP_landing_Cart_pizza_zurKasse = new javax.swing.JPanel();
         jLabel68 = new javax.swing.JLabel();
         jLabel39 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txa_landing_Cart_main_Extra = new javax.swing.JTextArea();
         jP_landing_Cart_pizza1 = new javax.swing.JPanel();
         jP_landing_Cart_pizza_Loeschen1 = new javax.swing.JPanel();
         jp_landing_Cart_pizza_Loeschen1_Label = new javax.swing.JLabel();
@@ -408,6 +404,9 @@ public class Pizzarando extends javax.swing.JFrame {
         jP_landing_Cart_kasse_Coupon_Prüfen = new javax.swing.JPanel();
         lbl_landing_Cart_kasse_Coupon_Prüfen = new javax.swing.JLabel();
         lbl_for_kassegesamt = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txa_landing_kasse_Extra = new javax.swing.JTextArea();
         jP_landing_Cart_ordered = new javax.swing.JPanel();
         jLabel90 = new javax.swing.JLabel();
         jLabel91 = new javax.swing.JLabel();
@@ -661,11 +660,11 @@ public class Pizzarando extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jP_homeMouseClicked(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jP_homeMouseEntered(evt);
-            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jP_homeMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jP_homeMouseEntered(evt);
             }
         });
 
@@ -881,11 +880,11 @@ public class Pizzarando extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jP_cartMouseClicked(evt);
             }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jP_cartMouseEntered(evt);
-            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jP_cartMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jP_cartMouseEntered(evt);
             }
         });
 
@@ -1055,6 +1054,10 @@ public class Pizzarando extends javax.swing.JFrame {
         jP_user_login.setLayout(jP_user_loginLayout);
         jP_user_loginLayout.setHorizontalGroup(
             jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_user_loginLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btn_benutzer_ausloggen)
+                .addGap(126, 126, 126))
             .addGroup(jP_user_loginLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1063,47 +1066,51 @@ public class Pizzarando extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
                         .addComponent(jLabel15)
                         .addGap(80, 80, 80))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_user_loginLayout.createSequentialGroup()
-                        .addGroup(jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txt_user_passwort, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_user_email))
-                        .addContainerGap())
-                    .addGroup(jP_user_loginLayout.createSequentialGroup()
-                        .addGroup(jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel67)
-                            .addComponent(lbl_landing_benutzer_passwort))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jP_user_loginLayout.createSequentialGroup()
                         .addComponent(txt_user_vorname, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_user_loginLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_benutzer_ausloggen)
-                .addGap(126, 126, 126))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jP_user_loginLayout.createSequentialGroup()
+                        .addGroup(jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel67, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbl_landing_benutzer_passwort, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_user_loginLayout.createSequentialGroup()
+                        .addGroup(jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txt_user_email, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_user_passwort))
+                        .addContainerGap())))
             .addGroup(jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jP_user_loginLayout.createSequentialGroup()
                     .addContainerGap()
-                    .addGroup(jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jP_user_loginLayout.createSequentialGroup()
                             .addGroup(jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel3)
                                 .addComponent(txt_user_straße, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addGroup(jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel11)
-                                .addComponent(txt_user_hausnummer, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jP_user_loginLayout.createSequentialGroup()
-                            .addGroup(jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txt_user_plz, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel12))
-                            .addGap(18, 18, 18)
-                            .addGroup(jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel13)
-                                .addComponent(txt_user_ort)))
-                        .addGroup(jP_user_loginLayout.createSequentialGroup()
-                            .addGap(173, 173, 173)
-                            .addComponent(txt_user_nachname, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(jP_user_loginLayout.createSequentialGroup()
+                                    .addComponent(jLabel11)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(jP_user_loginLayout.createSequentialGroup()
+                                    .addComponent(txt_user_hausnummer, javax.swing.GroupLayout.PREFERRED_SIZE, 54, Short.MAX_VALUE)
+                                    .addContainerGap())))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_user_loginLayout.createSequentialGroup()
+                            .addGroup(jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jP_user_loginLayout.createSequentialGroup()
+                                    .addGap(0, 184, Short.MAX_VALUE)
+                                    .addComponent(txt_user_nachname, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jP_user_loginLayout.createSequentialGroup()
+                                    .addGroup(jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txt_user_plz, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel12))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jP_user_loginLayout.createSequentialGroup()
+                                            .addComponent(jLabel13)
+                                            .addGap(0, 0, Short.MAX_VALUE))
+                                        .addComponent(txt_user_ort, javax.swing.GroupLayout.DEFAULT_SIZE, 236, Short.MAX_VALUE))))
+                            .addContainerGap()))))
         );
         jP_user_loginLayout.setVerticalGroup(
             jP_user_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1149,7 +1156,7 @@ public class Pizzarando extends javax.swing.JFrame {
         );
 
         jP_user_btn.setBackground(new java.awt.Color(253, 150, 68));
-        jP_user_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jP_user_btn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jP_user_btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jP_user_btnMouseClicked(evt);
@@ -1189,16 +1196,15 @@ public class Pizzarando extends javax.swing.JFrame {
         jP_landing_BenutzerLayout.setHorizontalGroup(
             jP_landing_BenutzerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jP_landing_BenutzerLayout.createSequentialGroup()
-                .addGroup(jP_landing_BenutzerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jP_landing_BenutzerLayout.createSequentialGroup()
-                        .addGap(277, 277, 277)
-                        .addComponent(jLabel36))
-                    .addGroup(jP_landing_BenutzerLayout.createSequentialGroup()
-                        .addContainerGap(203, Short.MAX_VALUE)
-                        .addGroup(jP_landing_BenutzerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jP_user_login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jP_user_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(221, Short.MAX_VALUE))
+                .addGap(277, 277, 277)
+                .addComponent(jLabel36)
+                .addContainerGap(278, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_landing_BenutzerLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jP_landing_BenutzerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jP_user_login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jP_user_btn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(208, 208, 208))
         );
         jP_landing_BenutzerLayout.setVerticalGroup(
             jP_landing_BenutzerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1208,7 +1214,7 @@ public class Pizzarando extends javax.swing.JFrame {
                 .addComponent(jP_user_login, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jP_user_btn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
 
         jP_main.add(jP_landing_Benutzer, "card2");
@@ -1398,7 +1404,7 @@ public class Pizzarando extends javax.swing.JFrame {
         jLabel134.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         jLabel134.setForeground(new java.awt.Color(255, 173, 109));
         jLabel134.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel134.setText("<html><p style=\"text-align:center;\">Gutscheincodes der Woche:<br> 5%: Pizza5<br></p></html>");
+        jLabel134.setText("<html><p style=\"text-align:center;\">Gutscheincodes der Woche: 5%: Pizza5<br></p></html>");
 
         jLabel135.setBackground(new java.awt.Color(0, 0, 0));
         jLabel135.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 48)); // NOI18N
@@ -1406,19 +1412,17 @@ public class Pizzarando extends javax.swing.JFrame {
         jLabel135.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel135.setText("Home");
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/logo -125.png"))); // NOI18N
-
         jLabel136.setBackground(new java.awt.Color(0, 0, 0));
         jLabel136.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
         jLabel136.setForeground(new java.awt.Color(250, 130, 49));
         jLabel136.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel136.setText("<html><p style=\"text-align:center;\">Willkommen bei PIZZARANDO gehe auf Bestellen um deine Bestellung aufzugeben </p></html>");
+        jLabel136.setText("<html><p style=\"text-align:center;\">Willkommen bei PIZZARANDO <br> Klicke auf \"Bestellen\" um deine Pizzawünsche aufzugeben </p></html>");
 
         jLabel137.setBackground(new java.awt.Color(0, 0, 0));
         jLabel137.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 18)); // NOI18N
         jLabel137.setForeground(new java.awt.Color(125, 125, 125));
         jLabel137.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel137.setText("Dieses Pizza-Bestell Programm wurde inzuge des CT-Projektes von");
+        jLabel137.setText("Dieses Pizza-Bestell Programm wurde im Rahmen des CT-Projektes von");
         jLabel137.setToolTipText("");
 
         jLabel138.setBackground(new java.awt.Color(0, 0, 0));
@@ -1435,7 +1439,7 @@ public class Pizzarando extends javax.swing.JFrame {
         jLabel139.setToolTipText("");
 
         jLabel148.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel148.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 24)); // NOI18N
+        jLabel148.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 20)); // NOI18N
         jLabel148.setForeground(new java.awt.Color(250, 130, 49));
         jLabel148.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel148.setText("<html><p style=\"text-align:center;\">Letzte Bestellung:</p></html>");
@@ -1443,60 +1447,16 @@ public class Pizzarando extends javax.swing.JFrame {
         txt_landing_home_aktuelleBestellung.setBackground(new java.awt.Color(0, 0, 0));
         txt_landing_home_aktuelleBestellung.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
         txt_landing_home_aktuelleBestellung.setForeground(new java.awt.Color(250, 130, 49));
-        txt_landing_home_aktuelleBestellung.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        txt_landing_home_aktuelleBestellung.setText("<html><p style=\"text-align:center;\">keine letzte Bestellung gefunden</p></html>");
+        txt_landing_home_aktuelleBestellung.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txt_landing_home_aktuelleBestellung.setText("<html><p style=\"text-align:center;\">Keine letzte Bestellung gefunden!</p></html>");
         txt_landing_home_aktuelleBestellung.setVerticalAlignment(javax.swing.SwingConstants.TOP);
-
-        jP_bestellung_angekommen.setBackground(new java.awt.Color(253, 150, 68));
-        jP_bestellung_angekommen.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jP_bestellung_angekommen.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jP_bestellung_angekommenMouseClicked(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jP_bestellung_angekommenMouseExited(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jP_bestellung_angekommenMouseEntered(evt);
-            }
-        });
-
-        jLabel106.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel106.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 14)); // NOI18N
-        jLabel106.setForeground(new java.awt.Color(250, 250, 250));
-        jLabel106.setText("  geliefert!");
-        jLabel106.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel106MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel106MouseEntered(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jP_bestellung_angekommenLayout = new javax.swing.GroupLayout(jP_bestellung_angekommen);
-        jP_bestellung_angekommen.setLayout(jP_bestellung_angekommenLayout);
-        jP_bestellung_angekommenLayout.setHorizontalGroup(
-            jP_bestellung_angekommenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jP_bestellung_angekommenLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel106)
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
-        jP_bestellung_angekommenLayout.setVerticalGroup(
-            jP_bestellung_angekommenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_bestellung_angekommenLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel106, javax.swing.GroupLayout.DEFAULT_SIZE, 20, Short.MAX_VALUE)
-                .addContainerGap())
-        );
 
         javax.swing.GroupLayout jP_landing_Home_mainLayout = new javax.swing.GroupLayout(jP_landing_Home_main);
         jP_landing_Home_main.setLayout(jP_landing_Home_mainLayout);
         jP_landing_Home_mainLayout.setHorizontalGroup(
             jP_landing_Home_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_landing_Home_mainLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(56, Short.MAX_VALUE)
                 .addGroup(jP_landing_Home_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_landing_Home_mainLayout.createSequentialGroup()
                         .addComponent(jLabel135)
@@ -1507,28 +1467,23 @@ public class Pizzarando extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_landing_Home_mainLayout.createSequentialGroup()
                         .addGroup(jP_landing_Home_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel137)
-                            .addComponent(jLabel136, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txt_landing_home_aktuelleBestellung, javax.swing.GroupLayout.PREFERRED_SIZE, 634, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jP_landing_Home_mainLayout.createSequentialGroup()
+                                .addComponent(jLabel136, javax.swing.GroupLayout.PREFERRED_SIZE, 574, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(12, 12, 12)))
                         .addGap(79, 79, 79))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_landing_Home_mainLayout.createSequentialGroup()
                         .addComponent(jLabel139)
                         .addGap(365, 365, 365))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_landing_Home_mainLayout.createSequentialGroup()
+            .addGroup(jP_landing_Home_mainLayout.createSequentialGroup()
                 .addGroup(jP_landing_Home_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jP_landing_Home_mainLayout.createSequentialGroup()
-                        .addGap(71, 71, 71)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(141, 141, 141)
+                        .addComponent(jLabel134, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jP_landing_Home_mainLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jLabel134, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jP_landing_Home_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_landing_home_aktuelleBestellung)
-                    .addGroup(jP_landing_Home_mainLayout.createSequentialGroup()
-                        .addComponent(jLabel148, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jP_bestellung_angekommen, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(79, 79, 79)))
-                .addContainerGap())
+                        .addGap(296, 296, 296)
+                        .addComponent(jLabel148, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jP_landing_Home_mainLayout.setVerticalGroup(
             jP_landing_Home_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1536,19 +1491,13 @@ public class Pizzarando extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel135, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel136, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel136, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addComponent(jLabel148, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jP_landing_Home_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jP_landing_Home_mainLayout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel134, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jP_landing_Home_mainLayout.createSequentialGroup()
-                        .addGroup(jP_landing_Home_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel148, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jP_bestellung_angekommen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(22, 22, 22)
-                        .addComponent(txt_landing_home_aktuelleBestellung, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)))
+                .addComponent(txt_landing_home_aktuelleBestellung, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(jLabel134, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel137, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1587,6 +1536,37 @@ public class Pizzarando extends javax.swing.JFrame {
         lbl_landing_admin_bestellinfos.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbl_landing_admin_bestellinfos.setText("<html><p style=\"text-align:left;\">Wählen Sie eine Bestellung aus.<br> </p></html>");
 
+        jP_admin_bestellung_aktualisieren.setBackground(new java.awt.Color(89, 144, 227));
+        jP_admin_bestellung_aktualisieren.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jP_admin_bestellung_aktualisierenMouseClicked(evt);
+            }
+        });
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/aktualisieren.png"))); // NOI18N
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jP_admin_bestellung_aktualisierenLayout = new javax.swing.GroupLayout(jP_admin_bestellung_aktualisieren);
+        jP_admin_bestellung_aktualisieren.setLayout(jP_admin_bestellung_aktualisierenLayout);
+        jP_admin_bestellung_aktualisierenLayout.setHorizontalGroup(
+            jP_admin_bestellung_aktualisierenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_admin_bestellung_aktualisierenLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel10)
+                .addContainerGap())
+        );
+        jP_admin_bestellung_aktualisierenLayout.setVerticalGroup(
+            jP_admin_bestellung_aktualisierenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_admin_bestellung_aktualisierenLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel10)
+                .addGap(14, 14, 14))
+        );
+
         jP_admin_bestellung_check.setBackground(new java.awt.Color(51, 255, 51));
         jP_admin_bestellung_check.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1594,10 +1574,10 @@ public class Pizzarando extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-checkmark-yes-50.png"))); // NOI18N
-        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+        jLabel46.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8-checkmark-yes-50.png"))); // NOI18N
+        jLabel46.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel10MouseClicked(evt);
+                jLabel46MouseClicked(evt);
             }
         });
 
@@ -1607,14 +1587,14 @@ public class Pizzarando extends javax.swing.JFrame {
             jP_admin_bestellung_checkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jP_admin_bestellung_checkLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel10)
+                .addComponent(jLabel46)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jP_admin_bestellung_checkLayout.setVerticalGroup(
             jP_admin_bestellung_checkLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_admin_bestellung_checkLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel10)
+                .addComponent(jLabel46)
                 .addGap(14, 14, 14))
         );
 
@@ -1630,24 +1610,36 @@ public class Pizzarando extends javax.swing.JFrame {
                     .addComponent(jLabel140)
                     .addGroup(jP_landing_Admin_mainLayout.createSequentialGroup()
                         .addComponent(lbl_landing_admin_bestellinfos, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jP_admin_bestellung_check, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jP_admin_bestellung_aktualisieren, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(15, Short.MAX_VALUE))
+            .addGroup(jP_landing_Admin_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_landing_Admin_mainLayout.createSequentialGroup()
+                    .addContainerGap(690, Short.MAX_VALUE)
+                    .addComponent(jP_admin_bestellung_check, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(17, 17, 17)))
         );
         jP_landing_Admin_mainLayout.setVerticalGroup(
             jP_landing_Admin_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_landing_Admin_mainLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel140, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jP_landing_Admin_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_admin_Infos_Bestellung, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                    .addComponent(lbl_landing_admin_bestellinfos))
-                .addGap(33, 33, 33))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_landing_Admin_mainLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jP_admin_bestellung_check, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(52, 52, 52))
+                    .addGroup(jP_landing_Admin_mainLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jP_landing_Admin_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_admin_Infos_Bestellung, javax.swing.GroupLayout.DEFAULT_SIZE, 526, Short.MAX_VALUE)
+                            .addComponent(lbl_landing_admin_bestellinfos))
+                        .addGap(33, 33, 33))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_landing_Admin_mainLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jP_admin_bestellung_aktualisieren, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(114, 114, 114))))
+            .addGroup(jP_landing_Admin_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_landing_Admin_mainLayout.createSequentialGroup()
+                    .addContainerGap(552, Short.MAX_VALUE)
+                    .addComponent(jP_admin_bestellung_check, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(42, 42, 42)))
         );
 
         jP_landing_Admin.add(jP_landing_Admin_main, "card2");
@@ -1695,9 +1687,9 @@ public class Pizzarando extends javax.swing.JFrame {
         jP_landing_Cart_pizza_zurKasseLayout.setVerticalGroup(
             jP_landing_Cart_pizza_zurKasseLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_landing_Cart_pizza_zurKasseLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(27, Short.MAX_VALUE)
                 .addComponent(jLabel68, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         jLabel39.setBackground(new java.awt.Color(0, 0, 0));
@@ -1705,11 +1697,6 @@ public class Pizzarando extends javax.swing.JFrame {
         jLabel39.setForeground(new java.awt.Color(250, 130, 49));
         jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel39.setText("Warenkorb");
-
-        txa_landing_Cart_main_Extra.setColumns(20);
-        txa_landing_Cart_main_Extra.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
-        txa_landing_Cart_main_Extra.setRows(5);
-        jScrollPane1.setViewportView(txa_landing_Cart_main_Extra);
 
         jP_landing_Cart_pizza1.setBackground(new java.awt.Color(250, 130, 49));
 
@@ -1722,6 +1709,12 @@ public class Pizzarando extends javax.swing.JFrame {
         jp_landing_Cart_pizza_Loeschen1_Label.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jp_landing_Cart_pizza_Loeschen1_LabelMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jp_landing_Cart_pizza_Loeschen1_LabelMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jp_landing_Cart_pizza_Loeschen1_LabelMouseEntered(evt);
             }
         });
 
@@ -1743,6 +1736,12 @@ public class Pizzarando extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jP_landing_Cart_pizza_Bearbeiten1MouseClicked(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jP_landing_Cart_pizza_Bearbeiten1MouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jP_landing_Cart_pizza_Bearbeiten1MouseEntered(evt);
+            }
         });
 
         jp_landing_Cart_Edit1_Label.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 14)); // NOI18N
@@ -1752,6 +1751,12 @@ public class Pizzarando extends javax.swing.JFrame {
         jp_landing_Cart_Edit1_Label.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jp_landing_Cart_Edit1_LabelMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jp_landing_Cart_Edit1_LabelMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jp_landing_Cart_Edit1_LabelMouseEntered(evt);
             }
         });
 
@@ -1848,6 +1853,12 @@ public class Pizzarando extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jp_landing_Cart_pizza_Loeschen2_LabelMouseClicked(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jp_landing_Cart_pizza_Loeschen2_LabelMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jp_landing_Cart_pizza_Loeschen2_LabelMouseEntered(evt);
+            }
         });
 
         javax.swing.GroupLayout jP_landing_Cart_pizza_Loeschen2Layout = new javax.swing.GroupLayout(jP_landing_Cart_pizza_Loeschen2);
@@ -1868,6 +1879,12 @@ public class Pizzarando extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jP_landing_Cart_pizza_Bearbeiten2MouseClicked(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jP_landing_Cart_pizza_Bearbeiten2MouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jP_landing_Cart_pizza_Bearbeiten2MouseEntered(evt);
+            }
         });
 
         jp_landing_Cart_Edit2_Label.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 14)); // NOI18N
@@ -1877,6 +1894,12 @@ public class Pizzarando extends javax.swing.JFrame {
         jp_landing_Cart_Edit2_Label.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jp_landing_Cart_Edit2_LabelMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jp_landing_Cart_Edit2_LabelMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jp_landing_Cart_Edit2_LabelMouseEntered(evt);
             }
         });
 
@@ -1973,6 +1996,12 @@ public class Pizzarando extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jp_landing_Cart_pizza_Loeschen3_LabelMouseClicked(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jp_landing_Cart_pizza_Loeschen3_LabelMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jp_landing_Cart_pizza_Loeschen3_LabelMouseEntered(evt);
+            }
         });
 
         javax.swing.GroupLayout jP_landing_Cart_pizza_Loeschen3Layout = new javax.swing.GroupLayout(jP_landing_Cart_pizza_Loeschen3);
@@ -1993,6 +2022,12 @@ public class Pizzarando extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jP_landing_Cart_pizza_Bearbeiten3MouseClicked(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jP_landing_Cart_pizza_Bearbeiten3MouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jP_landing_Cart_pizza_Bearbeiten3MouseEntered(evt);
+            }
         });
 
         jp_landing_Cart_Edit3_Label.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 14)); // NOI18N
@@ -2002,6 +2037,12 @@ public class Pizzarando extends javax.swing.JFrame {
         jp_landing_Cart_Edit3_Label.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jp_landing_Cart_Edit3_LabelMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jp_landing_Cart_Edit3_LabelMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jp_landing_Cart_Edit3_LabelMouseEntered(evt);
             }
         });
 
@@ -2098,6 +2139,12 @@ public class Pizzarando extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jp_landing_Cart_pizza_Loeschen4_LabelMouseClicked(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jp_landing_Cart_pizza_Loeschen4_LabelMouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jp_landing_Cart_pizza_Loeschen4_LabelMouseEntered(evt);
+            }
         });
 
         javax.swing.GroupLayout jP_landing_Cart_pizza_Loeschen4Layout = new javax.swing.GroupLayout(jP_landing_Cart_pizza_Loeschen4);
@@ -2118,6 +2165,12 @@ public class Pizzarando extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jP_landing_Cart_pizza_Bearbeiten4MouseClicked(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jP_landing_Cart_pizza_Bearbeiten4MouseExited(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jP_landing_Cart_pizza_Bearbeiten4MouseEntered(evt);
+            }
         });
 
         jp_landing_Cart_Edit4_Label.setFont(new java.awt.Font("Arial Rounded MT Bold", 1, 14)); // NOI18N
@@ -2127,6 +2180,9 @@ public class Pizzarando extends javax.swing.JFrame {
         jp_landing_Cart_Edit4_Label.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jp_landing_Cart_Edit4_LabelMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jp_landing_Cart_Edit4_LabelMouseEntered(evt);
             }
         });
 
@@ -2230,10 +2286,8 @@ public class Pizzarando extends javax.swing.JFrame {
                         .addGap(70, 70, 70)
                         .addGroup(jP_landing_Cart_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jP_landing_Cart_mainLayout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
                                 .addComponent(lbl_landing_Cart_Warenkorbbetrag, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(49, 49, 49)
+                                .addGap(366, 366, 366)
                                 .addComponent(jP_landing_Cart_pizza_zurKasse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(jP_landing_Cart_pizza1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jP_landing_Cart_pizza2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -2254,13 +2308,11 @@ public class Pizzarando extends javax.swing.JFrame {
                 .addComponent(jP_landing_Cart_pizza3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jP_landing_Cart_pizza4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jP_landing_Cart_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jP_landing_Cart_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jP_landing_Cart_pizza_zurKasse, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jP_landing_Cart_pizza_zurKasse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbl_landing_Cart_Warenkorbbetrag, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         jP_landing_Cart.add(jP_landing_Cart_main, "card2");
@@ -2431,7 +2483,7 @@ public class Pizzarando extends javax.swing.JFrame {
 
         lbl_landing_Cart_kasse_Coupon_Prüfen.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 11)); // NOI18N
         lbl_landing_Cart_kasse_Coupon_Prüfen.setForeground(new java.awt.Color(255, 255, 255));
-        lbl_landing_Cart_kasse_Coupon_Prüfen.setText("Prüfen");
+        lbl_landing_Cart_kasse_Coupon_Prüfen.setText("Prüfe Coupon");
         lbl_landing_Cart_kasse_Coupon_Prüfen.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lbl_landing_Cart_kasse_Coupon_PrüfenMouseClicked(evt);
@@ -2445,10 +2497,10 @@ public class Pizzarando extends javax.swing.JFrame {
         jP_landing_Cart_kasse_Coupon_Prüfen.setLayout(jP_landing_Cart_kasse_Coupon_PrüfenLayout);
         jP_landing_Cart_kasse_Coupon_PrüfenLayout.setHorizontalGroup(
             jP_landing_Cart_kasse_Coupon_PrüfenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jP_landing_Cart_kasse_Coupon_PrüfenLayout.createSequentialGroup()
-                .addGap(23, 23, 23)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_landing_Cart_kasse_Coupon_PrüfenLayout.createSequentialGroup()
+                .addContainerGap(15, Short.MAX_VALUE)
                 .addComponent(lbl_landing_Cart_kasse_Coupon_Prüfen)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
         jP_landing_Cart_kasse_Coupon_PrüfenLayout.setVerticalGroup(
             jP_landing_Cart_kasse_Coupon_PrüfenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2464,24 +2516,28 @@ public class Pizzarando extends javax.swing.JFrame {
         lbl_for_kassegesamt.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbl_for_kassegesamt.setText("€");
 
+        jLabel7.setText("Extrawünsche:");
+
+        txa_landing_kasse_Extra.setColumns(20);
+        txa_landing_kasse_Extra.setFont(new java.awt.Font("Arial Rounded MT Bold", 0, 12)); // NOI18N
+        txa_landing_kasse_Extra.setRows(5);
+        jScrollPane1.setViewportView(txa_landing_kasse_Extra);
+
         javax.swing.GroupLayout jP_landing_Cart_kasse_mainLayout = new javax.swing.GroupLayout(jP_landing_Cart_kasse_main);
         jP_landing_Cart_kasse_main.setLayout(jP_landing_Cart_kasse_mainLayout);
         jP_landing_Cart_kasse_mainLayout.setHorizontalGroup(
             jP_landing_Cart_kasse_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_landing_Cart_kasse_mainLayout.createSequentialGroup()
+                .addComponent(jP_landing_Cart_kasse_Adresse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                .addGroup(jP_landing_Cart_kasse_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 295, javax.swing.GroupLayout.PREFERRED_SIZE)))
             .addGroup(jP_landing_Cart_kasse_mainLayout.createSequentialGroup()
                 .addGroup(jP_landing_Cart_kasse_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jP_landing_Cart_kasse_Adresse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel81))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jP_landing_Cart_kasse_mainLayout.createSequentialGroup()
-                .addGroup(jP_landing_Cart_kasse_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jP_landing_Cart_kasse_mainLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jP_landing_Cart_kasse_Back, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jP_landing_Cart_kasse_Order, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jP_landing_Cart_kasse_mainLayout.createSequentialGroup()
                         .addGroup(jP_landing_Cart_kasse_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel81)
                             .addGroup(jP_landing_Cart_kasse_mainLayout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(jLabel98, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -2490,19 +2546,26 @@ public class Pizzarando extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jP_landing_Cart_kasse_Coupon_Prüfen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jP_landing_Cart_kasse_mainLayout.createSequentialGroup()
-                                .addGap(233, 233, 233)
-                                .addComponent(jLabel82))
-                            .addGroup(jP_landing_Cart_kasse_mainLayout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(cB_Cart_Bar)))
-                        .addGap(0, 55, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jP_landing_Cart_kasse_mainLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jP_landing_Cart_kasse_Back, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jP_landing_Cart_kasse_Order, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jP_landing_Cart_kasse_mainLayout.createSequentialGroup()
+                        .addGroup(jP_landing_Cart_kasse_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jP_landing_Cart_kasse_mainLayout.createSequentialGroup()
+                                .addGap(288, 288, 288)
+                                .addComponent(lbl_landing_Cart_kasse_Gesamtbetrag)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lbl_for_kassegesamt))
+                            .addGroup(jP_landing_Cart_kasse_mainLayout.createSequentialGroup()
+                                .addGap(224, 224, 224)
+                                .addComponent(jLabel82)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jP_landing_Cart_kasse_mainLayout.createSequentialGroup()
-                .addGap(288, 288, 288)
-                .addComponent(lbl_landing_Cart_kasse_Gesamtbetrag)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbl_for_kassegesamt)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jP_landing_Cart_kasse_mainLayout.setVerticalGroup(
             jP_landing_Cart_kasse_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2518,7 +2581,12 @@ public class Pizzarando extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(cB_Cart_Bar)
                 .addGap(65, 65, 65)
-                .addComponent(jP_landing_Cart_kasse_Adresse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jP_landing_Cart_kasse_mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jP_landing_Cart_kasse_mainLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1))
+                    .addComponent(jP_landing_Cart_kasse_Adresse, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel82)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -2659,7 +2727,7 @@ public class Pizzarando extends javax.swing.JFrame {
                 .addComponent(jLabel91, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jP_landing_Cart_ordermore, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(304, Short.MAX_VALUE))
+                .addContainerGap(226, Short.MAX_VALUE))
         );
 
         jP_landing_Cart.add(jP_landing_Cart_ordered, "card4");
@@ -2934,10 +3002,13 @@ public class Pizzarando extends javax.swing.JFrame {
         jP_landing_Cart_bearbeiten.setLayout(jP_landing_Cart_bearbeitenLayout);
         jP_landing_Cart_bearbeitenLayout.setHorizontalGroup(
             jP_landing_Cart_bearbeitenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jP_landing_Cart_bearbeitenLayout.createSequentialGroup()
-                .addGap(82, 82, 82)
-                .addGroup(jP_landing_Cart_bearbeitenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jP_landing_Cart_bearbeitenLayout.createSequentialGroup()
+                .addGroup(jP_landing_Cart_bearbeitenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jP_landing_Cart_bearbeitenLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jp_landing_cart_bearbeiten_title, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jP_landing_Cart_bearbeitenLayout.createSequentialGroup()
+                        .addGap(82, 82, 82)
                         .addGroup(jP_landing_Cart_bearbeitenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jP_landing_Cart_bearbeitenLayout.createSequentialGroup()
                                 .addGroup(jP_landing_Cart_bearbeitenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -2959,12 +3030,8 @@ public class Pizzarando extends javax.swing.JFrame {
                             .addGroup(jP_landing_Cart_bearbeitenLayout.createSequentialGroup()
                                 .addComponent(jP_landing_Cart_bearbeiten_Back, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 321, Short.MAX_VALUE)
-                                .addComponent(jP_landing_Cart_bearbeiten_toCart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(43, 43, 43))
-                    .addGroup(jP_landing_Cart_bearbeitenLayout.createSequentialGroup()
-                        .addGap(189, 189, 189)
-                        .addComponent(jp_landing_cart_bearbeiten_title, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addComponent(jP_landing_Cart_bearbeiten_toCart, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(43, 43, 43))
         );
         jP_landing_Cart_bearbeitenLayout.setVerticalGroup(
             jP_landing_Cart_bearbeitenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -6911,24 +6978,17 @@ public class Pizzarando extends javax.swing.JFrame {
         status_Benutzer(false);
         status_Admin(false);
         status_Cart(false);
+        aktualisiereHome();
     }//GEN-LAST:event_jP_homeMouseClicked
 
     private void txt_HomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_HomeMouseClicked
         // TODO addPizza your handling code here:
-        status_Bestellen(false);
-        status_Home(true);
-        status_Benutzer(false);
-        status_Admin(false);
-        status_Cart(false);
+        jP_homeMouseClicked(evt);
     }//GEN-LAST:event_txt_HomeMouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO addPizza your handling code here:
-        status_Bestellen(false);
-        status_Home(true);
-        status_Benutzer(false);
-        status_Admin(false);
-        status_Cart(false);
+        jP_homeMouseClicked(evt);
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel18MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel18MouseClicked
@@ -7144,6 +7204,9 @@ public class Pizzarando extends javax.swing.JFrame {
             status_Benutzer(false);
             status_Admin(false);
             status_Cart(true);
+            for (int i = 0; i < warenkorb.getWarenkorbItems().size(); i++) {
+                aktualisiereWarenkorb(i);
+            }
             aktualisiereKasse();
         }
 
@@ -7207,6 +7270,7 @@ public class Pizzarando extends javax.swing.JFrame {
             String typ = "Salami";
 
             Pizza salamiPizza = new Pizza(typ, anzahl, tomatensoße, kaese, rucola, salami, zwiebeln);
+            JOptionPane.showMessageDialog(rootPane, "Preis der Pizza: " + kovertiereZuEuro(salamiPizza.berechnePizzaPreis()) + "€");
             int index = warenkorb.addPizza(salamiPizza);
             aktualisiereWarenkorb(index);
 
@@ -7407,8 +7471,9 @@ public class Pizzarando extends javax.swing.JFrame {
             String typ = "Speciale";
 
             Pizza specialePizza = new Pizza(typ, anzahl, tomatensoße, kaese, rucola, salami, zwiebeln);
-
+            JOptionPane.showMessageDialog(rootPane, "Preis der Pizza: " + kovertiereZuEuro(specialePizza.berechnePizzaPreis()) + "€");
             int index = warenkorb.addPizza(specialePizza);
+            JOptionPane.showMessageDialog(rootPane, "Preis der Pizza: " + kovertiereZuEuro(specialePizza.berechnePizzaPreis()) + "€");
             aktualisiereWarenkorb(index);
 
             status_Bestellen_speciale(false);
@@ -7593,7 +7658,7 @@ public class Pizzarando extends javax.swing.JFrame {
             String typ = "Diavolo";
 
             Pizza diavoloPizza = new Pizza(typ, anzahl, tomatensoße, kaese, rucola, salami, zwiebeln);
-
+            JOptionPane.showMessageDialog(rootPane, "Preis der Pizza: " + kovertiereZuEuro(diavoloPizza.berechnePizzaPreis()) + "€");
             int index = warenkorb.addPizza(diavoloPizza);
             aktualisiereWarenkorb(index);
 
@@ -7779,7 +7844,7 @@ public class Pizzarando extends javax.swing.JFrame {
             String typ = "Stagioni";
 
             Pizza stagioniPizza = new Pizza(typ, anzahl, tomatensoße, kaese, rucola, salami, zwiebeln);
-
+            JOptionPane.showMessageDialog(rootPane, "Preis der Pizza: " + kovertiereZuEuro(stagioniPizza.berechnePizzaPreis()) + "€");
             int index = warenkorb.addPizza(stagioniPizza);
             aktualisiereWarenkorb(index);
 
@@ -8069,6 +8134,8 @@ public class Pizzarando extends javax.swing.JFrame {
         // TODO addPizza your handling code here:
         status_Cart_main(true);
         status_Cart_kasse(false);
+        txt_landing_kasse_coupon.setText("");
+        kassenGesamtBetrag = warenkorbGesamtBetrag;
     }//GEN-LAST:event_jP_landing_Cart_kasse_BackMouseClicked
 
     private void jLabel69MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel69MouseEntered
@@ -8078,8 +8145,7 @@ public class Pizzarando extends javax.swing.JFrame {
 
     private void jLabel69MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel69MouseClicked
         // TODO addPizza your handling code here:
-        status_Cart_main(true);
-        status_Cart_kasse(false);
+        jP_landing_Cart_kasse_BackMouseClicked(evt);
     }//GEN-LAST:event_jLabel69MouseClicked
 
     private void cB_login_showPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cB_login_showPasswordActionPerformed
@@ -8152,10 +8218,40 @@ public class Pizzarando extends javax.swing.JFrame {
 
     private void jP_landing_Cart_kasse_OrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP_landing_Cart_kasse_OrderMouseClicked
         // TODO addPizza your handling code here:
-        if (aktuelleBestellungsId == 0) {
+        if (db.getLetzteBestellungsinfo(angemeldeterBenutzer) != null) {
+            if (db.getLetzteBestellungsinfo(angemeldeterBenutzer).isFertig()) {
+                if (cB_Cart_Bar.isSelected()) {
+                    String coupon = "kein Coupon";
+                    String extra = txa_landing_kasse_Extra.getText();
+                    double betrag = Double.parseDouble(lbl_landing_Cart_kasse_Gesamtbetrag.getText().replace(",", "."));
+
+                    DateTimeFormatter dtf4 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+                    String time = (dtf4.format(LocalDateTime.now()));
+
+                    if (!txt_landing_kasse_coupon.getText().equals("") && pruefeCoupon(txt_landing_kasse_coupon.getText()) != 0) {
+                        coupon = txt_landing_kasse_coupon.getText();
+                    }
+
+                    Bestellung bestellung = new Bestellung(warenkorb, angemeldeterBenutzer, kassenGesamtBetrag, coupon, extra, time, db);
+                    leereWarenkorb();
+                    status_Cart_ordered(true);
+                    status_Cart_kasse(false);
+                    status_Cart_main(false);
+
+                    txt_landing_kasse_coupon.setText("");
+                    cB_Cart_Bar.setSelected(false);
+
+                    aktualisiereHome();
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Akzeptieren Sie bitte noch, dass Sie das Bargeld dem Lieferanten bei Lieferung übergeben werden.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Warten Sie bitte noch, bis Ihre vorherige Bestellung angekommen ist.");
+            }
+        } else {
             if (cB_Cart_Bar.isSelected()) {
                 String coupon = "kein Coupon";
-                String extra = txa_landing_Cart_main_Extra.getText();
+                String extra = txa_landing_kasse_Extra.getText();
                 double betrag = Double.parseDouble(lbl_landing_Cart_kasse_Gesamtbetrag.getText().replace(",", "."));
 
                 DateTimeFormatter dtf4 = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
@@ -8173,31 +8269,10 @@ public class Pizzarando extends javax.swing.JFrame {
 
                 txt_landing_kasse_coupon.setText("");
                 cB_Cart_Bar.setSelected(false);
-
-                try {
-                    bestellung.speichereBestellung();
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(rootPane, "Fehler beim Bestellen. Bitte versuche es später erneut.");
-                }
-
-                aktuelleBestellungsId = bestellung.getBestellID();
-                try {
-                    txt_landing_home_aktuelleBestellung.setText("<html><p style=\"text-align:left;\">" + db.getBestellungDetails(aktuelleBestellungsId) + "</p></html>");
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(rootPane, "Fehler bei einer Datenbankabfrage.");
-                } catch (IOException ex) {
-                    JOptionPane.showMessageDialog(rootPane, "Fehler bei einen Dateizugriff.");
-                } catch (NoSuchAlgorithmException ex) {
-                    JOptionPane.showMessageDialog(rootPane, "Interner Fehler. Bitte neu starten.");
-                }
+                jP_landing_Cart_kasse_Order.setBackground(disabled);
                 aktualisiereHome();
             } else {
                 JOptionPane.showMessageDialog(rootPane, "Akzeptieren Sie bitte noch, dass Sie das Bargeld dem Lieferanten bei Lieferung übergeben werden.");
-            }
-        } else {
-            if (JOptionPane.showOptionDialog(rootPane, "Warten Sie bitte noch, bis Ihre vorherige Bestellung angekommen ist. Haben Sie Ihre Lieferung bereits erhalten?", "Vorherige Bestellung bereits erhalten?", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, null, null, null) == 0) {
-                loescheAktuelleBestellungLokal();
-                jP_landing_Cart_kasse_OrderMouseClicked(evt);
             }
         }
     }//GEN-LAST:event_jP_landing_Cart_kasse_OrderMouseClicked
@@ -8290,7 +8365,7 @@ public class Pizzarando extends javax.swing.JFrame {
             String typ = "Rucula";
 
             Pizza ruculaPizza = new Pizza(typ, anzahl, tomatensoße, kaese, rucola, salami, zwiebeln);
-
+            JOptionPane.showMessageDialog(rootPane, "Preis der Pizza: " + kovertiereZuEuro(ruculaPizza.berechnePizzaPreis()) + "€");
             int index = warenkorb.addPizza(ruculaPizza);
             aktualisiereWarenkorb(index);
 
@@ -8467,7 +8542,7 @@ public class Pizzarando extends javax.swing.JFrame {
             String typ = "Caprese";
 
             Pizza capresePizza = new Pizza(typ, anzahl, tomatensoße, kaese, rucola, salami, zwiebeln);
-
+            JOptionPane.showMessageDialog(rootPane, "Preis der Pizza: " + kovertiereZuEuro(capresePizza.berechnePizzaPreis()) + "€");
             int index = warenkorb.addPizza(capresePizza);
             aktualisiereWarenkorb(index);
 
@@ -8647,7 +8722,7 @@ public class Pizzarando extends javax.swing.JFrame {
             String typ = "Funghi";
 
             Pizza funghiPizza = new Pizza(typ, anzahl, tomatensoße, kaese, rucola, salami, zwiebeln);
-
+            JOptionPane.showMessageDialog(rootPane, "Preis der Pizza: " + kovertiereZuEuro(funghiPizza.berechnePizzaPreis()) + "€");
             int index = warenkorb.addPizza(funghiPizza);
             aktualisiereWarenkorb(index);
 
@@ -8836,7 +8911,7 @@ public class Pizzarando extends javax.swing.JFrame {
             String typ = "Margherita";
 
             Pizza margheritaPizza = new Pizza(typ, anzahl, tomatensoße, kaese, rucola, salami, zwiebeln);
-
+            JOptionPane.showMessageDialog(rootPane, "Preis der Pizza: " + kovertiereZuEuro(margheritaPizza.berechnePizzaPreis()) + "€");
             int index = warenkorb.addPizza(margheritaPizza);
             aktualisiereWarenkorb(index);
 
@@ -9020,7 +9095,7 @@ public class Pizzarando extends javax.swing.JFrame {
             String typ = "Pepperoni";
 
             Pizza pepperoniPizza = new Pizza(typ, anzahl, tomatensoße, kaese, rucola, salami, zwiebeln);
-
+            JOptionPane.showMessageDialog(rootPane, "Preis der Pizza: " + kovertiereZuEuro(pepperoniPizza.berechnePizzaPreis()) + "€");
             int index = warenkorb.addPizza(pepperoniPizza);
             aktualisiereWarenkorb(index);
 
@@ -9215,8 +9290,8 @@ public class Pizzarando extends javax.swing.JFrame {
         }
 
         int anzahl = Integer.parseInt(jP_landing_Cart_bearbeiten_Counter.getText());
-
         warenkorb.getWarenkorbItems().get(aktuellerWarenkorbIndex).edit(anzahl, tomatensosse, kaese, rocula, salami, zwiebeln);
+        JOptionPane.showMessageDialog(rootPane, "Neuer Preis der Pizza: " + kovertiereZuEuro(warenkorb.getWarenkorbItems().get(aktuellerWarenkorbIndex).berechnePizzaPreis()) + "€");
         System.out.println("Pizza im Slot " + aktuellerWarenkorbIndex + " aktualisiert ");
         satuts_Cart_bearbeiten(false);
         status_Cart_main(true);
@@ -9452,7 +9527,13 @@ public class Pizzarando extends javax.swing.JFrame {
 
     private void jP_landing_Cart_kasse_Coupon_PrüfenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP_landing_Cart_kasse_Coupon_PrüfenMouseClicked
         // TODO add your handling code here:
-        if (pruefeCoupon(txt_landing_kasse_coupon.getText()) != 0) {
+        if (pruefeCoupon(txt_landing_kasse_coupon.getText()) != 0 && !couponWarningVerstanden) {
+            if (JOptionPane.showConfirmDialog(rootPane, "Beim Verlassen der Kasse müssen Sie ihren Coupon erneut eingeben.", "Coupon", JOptionPane.OK_OPTION, JOptionPane.WARNING_MESSAGE) == 0) {
+                couponWarningVerstanden = true;
+                kassenGesamtBetrag = warenkorbGesamtBetrag - pruefeCoupon(txt_landing_kasse_coupon.getText());
+                aktualisiereKasse();
+            }
+        } else if (pruefeCoupon(txt_landing_kasse_coupon.getText()) != 0) {
             kassenGesamtBetrag = warenkorbGesamtBetrag - pruefeCoupon(txt_landing_kasse_coupon.getText());
             aktualisiereKasse();
         } else {
@@ -9485,41 +9566,14 @@ public class Pizzarando extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_benutzer_ausloggenMouseEntered
 
-    private void jP_bestellung_angekommenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP_bestellung_angekommenMouseClicked
-        // TODO add your handling code here:
-        loescheAktuelleBestellungLokal();
-    }//GEN-LAST:event_jP_bestellung_angekommenMouseClicked
-
-    private void jP_bestellung_angekommenMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP_bestellung_angekommenMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jP_bestellung_angekommenMouseExited
-
-    private void jP_bestellung_angekommenMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP_bestellung_angekommenMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jP_bestellung_angekommenMouseEntered
-
-    private void jLabel106MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel106MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel106MouseEntered
-
-    private void jLabel106MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel106MouseClicked
-        // TODO add your handling code here:
-        jP_bestellung_angekommenMouseClicked(evt);
-    }//GEN-LAST:event_jLabel106MouseClicked
-
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
-        jP_admin_bestellung_checkMouseClicked(evt);
+        jP_admin_bestellung_aktualisierenMouseClicked(evt);
     }//GEN-LAST:event_jLabel10MouseClicked
 
-    private void jP_admin_bestellung_checkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP_admin_bestellung_checkMouseClicked
+    private void jP_admin_bestellung_aktualisierenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP_admin_bestellung_aktualisierenMouseClicked
         // TODO add your handling code here:
-        if (list_admin_bestellungen.getSelectedIndex() >= 0) {
-            aktuellAusgewählteBestellungImAdminMenu.setBestellungAlsFertig(db);
-            aktualisiereAdmin();
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "Wählen Sie zuerst eine Bestellung aus.");
-        }
-    }//GEN-LAST:event_jP_admin_bestellung_checkMouseClicked
+        aktualisiereAdmin();
+    }//GEN-LAST:event_jP_admin_bestellung_aktualisierenMouseClicked
 
     private void list_admin_bestellungenValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_list_admin_bestellungenValueChanged
         // TODO add your handling code here:
@@ -9530,12 +9584,149 @@ public class Pizzarando extends javax.swing.JFrame {
 
             if (index >= 0) {
                 aktuellAusgewählteBestellungImAdminMenu = alleNochOffenenBestellungen.get(index);
+
                 lbl_landing_admin_bestellinfos.setText("<html><p style=\"text-align:left;\">" + db.getBestellungDetails(bestellId) + "</p></html>");
             }
-        } catch (Exception e) {
-            // kein Output notwendig
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Fehler bei einer Datenbankabfrage.");
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Fehler bei einer Dateiabfrage.");
+        } catch (NoSuchAlgorithmException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Interner Fehler. Starten Sie das Programm neu.");
+        } catch (NullPointerException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Keine weiteren offenen Bestellungen gefunden.");
         }
     }//GEN-LAST:event_list_admin_bestellungenValueChanged
+
+    private void jp_landing_Cart_pizza_Loeschen1_LabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_landing_Cart_pizza_Loeschen1_LabelMouseEntered
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Loeschen1.setBackground(hover_del);
+    }//GEN-LAST:event_jp_landing_Cart_pizza_Loeschen1_LabelMouseEntered
+
+    private void jp_landing_Cart_pizza_Loeschen1_LabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_landing_Cart_pizza_Loeschen1_LabelMouseExited
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Loeschen1.setBackground(del);
+    }//GEN-LAST:event_jp_landing_Cart_pizza_Loeschen1_LabelMouseExited
+
+    private void jp_landing_Cart_pizza_Loeschen2_LabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_landing_Cart_pizza_Loeschen2_LabelMouseEntered
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Loeschen2.setBackground(hover_del);
+    }//GEN-LAST:event_jp_landing_Cart_pizza_Loeschen2_LabelMouseEntered
+
+    private void jp_landing_Cart_pizza_Loeschen2_LabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_landing_Cart_pizza_Loeschen2_LabelMouseExited
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Loeschen2.setBackground(del);
+    }//GEN-LAST:event_jp_landing_Cart_pizza_Loeschen2_LabelMouseExited
+
+    private void jp_landing_Cart_pizza_Loeschen3_LabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_landing_Cart_pizza_Loeschen3_LabelMouseEntered
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Loeschen3.setBackground(hover_del);
+    }//GEN-LAST:event_jp_landing_Cart_pizza_Loeschen3_LabelMouseEntered
+
+    private void jp_landing_Cart_pizza_Loeschen3_LabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_landing_Cart_pizza_Loeschen3_LabelMouseExited
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Loeschen3.setBackground(del);
+    }//GEN-LAST:event_jp_landing_Cart_pizza_Loeschen3_LabelMouseExited
+
+    private void jp_landing_Cart_pizza_Loeschen4_LabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_landing_Cart_pizza_Loeschen4_LabelMouseEntered
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Loeschen4.setBackground(hover_del);
+    }//GEN-LAST:event_jp_landing_Cart_pizza_Loeschen4_LabelMouseEntered
+
+    private void jp_landing_Cart_pizza_Loeschen4_LabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_landing_Cart_pizza_Loeschen4_LabelMouseExited
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Loeschen4.setBackground(del);
+    }//GEN-LAST:event_jp_landing_Cart_pizza_Loeschen4_LabelMouseExited
+
+    private void jP_landing_Cart_pizza_Bearbeiten1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP_landing_Cart_pizza_Bearbeiten1MouseEntered
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Bearbeiten1.setBackground(hover_main);
+    }//GEN-LAST:event_jP_landing_Cart_pizza_Bearbeiten1MouseEntered
+
+    private void jp_landing_Cart_Edit1_LabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_landing_Cart_Edit1_LabelMouseEntered
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Bearbeiten1MouseEntered(evt);
+    }//GEN-LAST:event_jp_landing_Cart_Edit1_LabelMouseEntered
+
+    private void jp_landing_Cart_Edit1_LabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_landing_Cart_Edit1_LabelMouseExited
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Bearbeiten1.setBackground(main);
+    }//GEN-LAST:event_jp_landing_Cart_Edit1_LabelMouseExited
+
+    private void jP_landing_Cart_pizza_Bearbeiten1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP_landing_Cart_pizza_Bearbeiten1MouseExited
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Bearbeiten1.setBackground(main);
+    }//GEN-LAST:event_jP_landing_Cart_pizza_Bearbeiten1MouseExited
+
+    private void jP_landing_Cart_pizza_Bearbeiten2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP_landing_Cart_pizza_Bearbeiten2MouseEntered
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Bearbeiten2.setBackground(hover_main);
+    }//GEN-LAST:event_jP_landing_Cart_pizza_Bearbeiten2MouseEntered
+
+    private void jP_landing_Cart_pizza_Bearbeiten2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP_landing_Cart_pizza_Bearbeiten2MouseExited
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Bearbeiten2.setBackground(main);
+    }//GEN-LAST:event_jP_landing_Cart_pizza_Bearbeiten2MouseExited
+
+    private void jp_landing_Cart_Edit2_LabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_landing_Cart_Edit2_LabelMouseEntered
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Bearbeiten2MouseEntered(evt);
+    }//GEN-LAST:event_jp_landing_Cart_Edit2_LabelMouseEntered
+
+    private void jp_landing_Cart_Edit2_LabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_landing_Cart_Edit2_LabelMouseExited
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Bearbeiten2MouseExited(evt);
+    }//GEN-LAST:event_jp_landing_Cart_Edit2_LabelMouseExited
+
+    private void jP_landing_Cart_pizza_Bearbeiten3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP_landing_Cart_pizza_Bearbeiten3MouseEntered
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Bearbeiten3.setBackground(hover_main);
+    }//GEN-LAST:event_jP_landing_Cart_pizza_Bearbeiten3MouseEntered
+
+    private void jP_landing_Cart_pizza_Bearbeiten3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP_landing_Cart_pizza_Bearbeiten3MouseExited
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Bearbeiten3.setBackground(main);
+    }//GEN-LAST:event_jP_landing_Cart_pizza_Bearbeiten3MouseExited
+
+    private void jp_landing_Cart_Edit3_LabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_landing_Cart_Edit3_LabelMouseEntered
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Bearbeiten3MouseEntered(evt);
+    }//GEN-LAST:event_jp_landing_Cart_Edit3_LabelMouseEntered
+
+    private void jp_landing_Cart_Edit3_LabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_landing_Cart_Edit3_LabelMouseExited
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Bearbeiten3MouseExited(evt);
+    }//GEN-LAST:event_jp_landing_Cart_Edit3_LabelMouseExited
+
+    private void jP_landing_Cart_pizza_Bearbeiten4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP_landing_Cart_pizza_Bearbeiten4MouseEntered
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Bearbeiten4.setBackground(hover_main);
+    }//GEN-LAST:event_jP_landing_Cart_pizza_Bearbeiten4MouseEntered
+
+    private void jP_landing_Cart_pizza_Bearbeiten4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP_landing_Cart_pizza_Bearbeiten4MouseExited
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Bearbeiten4.setBackground(main);
+    }//GEN-LAST:event_jP_landing_Cart_pizza_Bearbeiten4MouseExited
+
+    private void jp_landing_Cart_Edit4_LabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jp_landing_Cart_Edit4_LabelMouseEntered
+        // TODO add your handling code here:
+        jP_landing_Cart_pizza_Bearbeiten4MouseEntered(evt);
+    }//GEN-LAST:event_jp_landing_Cart_Edit4_LabelMouseEntered
+
+    private void jLabel46MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel46MouseClicked
+        // TODO add your handling code here:
+        jP_admin_bestellung_checkMouseClicked(evt);
+    }//GEN-LAST:event_jLabel46MouseClicked
+
+    private void jP_admin_bestellung_checkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jP_admin_bestellung_checkMouseClicked
+        // TODO add your handling code here:
+        if (list_admin_bestellungen.getSelectedIndex() >= 0) {
+            aktuellAusgewählteBestellungImAdminMenu.setBestellungAlsFertig(db);
+            aktualisiereAdmin();
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "Wählen Sie zuerst eine Bestellung aus.");
+        }
+    }//GEN-LAST:event_jP_admin_bestellung_checkMouseClicked
 
     private void aktualisiereAdmin() {
         System.out.println("Aktualisiere Admin...");
@@ -9785,34 +9976,12 @@ public class Pizzarando extends javax.swing.JFrame {
     }
 
     private void aktualisiereHome() {
-        try {
-            System.out.println("Home wird aktualisiert...");
-            if (aktuelleBestellungsId != 0) {
-                jP_bestellung_angekommen.setVisible(true);
-                jP_bestellung_angekommen.setEnabled(true);
-            } else if (!db.ladeBestellungLokal().equals("0")) {
-
-                String query = "SELECT id FROM bestellung WHERE id = " + db.ladeBestellungLokal() + " AND benutzer = " + angemeldeterBenutzer.getId();
-                ArrayList result = db.query(query, 1);
-
-                if (!result.isEmpty()) {
-                    txt_landing_home_aktuelleBestellung.setText("<html><p style=\"text-align:left;\">" + db.getBestellungDetails(Integer.parseInt(db.ladeBestellungLokal())) + "</p></html>");
-
-                    jP_bestellung_angekommen.setVisible(true);
-                    jP_bestellung_angekommen.setEnabled(true);
-                }
-            } else {
-                jP_bestellung_angekommen.setVisible(false);
-                jP_bestellung_angekommen.setEnabled(false);
-            }
-        } catch (FileNotFoundException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Fehler beim Laden der Bestellung.");
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Fehler bei einer Datenbankabfrage.");
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Fehler bei einen Dateizugriff.");
-        } catch (NoSuchAlgorithmException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Interner Fehler. Bitte neu starten.");
+        System.out.println("Home wird aktualisiert...");
+        Bestellungsinfo letzteBestellung;
+        if ((letzteBestellung = db.getLetzteBestellungsinfo(angemeldeterBenutzer)) != null && !letzteBestellung.isFertig()) {
+            txt_landing_home_aktuelleBestellung.setText("<html><p style=\"text-align:left;\">" + letzteBestellung.getBestelldetails() + "</p></html>");
+        } else {
+            txt_landing_home_aktuelleBestellung.setText("<html><p style=\"text-align:left;\">keine Bestellung gefunden</p></html>");
         }
     }
 
@@ -9853,7 +10022,7 @@ public class Pizzarando extends javax.swing.JFrame {
     }
 
     public double pruefeCoupon(String coupon) {
-        if (coupon.equals("Pizza5")) {
+        if (coupon.equals("Pizza5") && couponHinzugefügt == false) {
             return warenkorbGesamtBetrag * 0.05;
         } else {
             return 0;
@@ -9869,14 +10038,11 @@ public class Pizzarando extends javax.swing.JFrame {
         aktualisiereKasse();
     }
 
-    private void loescheAktuelleBestellungLokal() {
-        aktuelleBestellungsId = 0;
-        File myFile = new File("bestellung.txt");
-        if (myFile.exists()) {
-            myFile.delete();
-        }
-        txt_landing_home_aktuelleBestellung.setText("<html><p style=\"text-align:center;\">Guten Appetit!</p></html>");
-        aktualisiereHome();
+    public String kovertiereZuEuro(double i) {
+        NumberFormat n = NumberFormat.getInstance();
+        n.setMaximumFractionDigits(2); // max. 2 stellen hinter komma
+        n.setMinimumFractionDigits(2); // max. 2 stellen hinter komma
+        return n.format(i);
     }
 
     /**
@@ -9921,7 +10087,6 @@ public class Pizzarando extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new Pizzarando().setVisible(true);
-
             }
         });
     }
@@ -9990,7 +10155,6 @@ public class Pizzarando extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel103;
     private javax.swing.JLabel jLabel104;
     private javax.swing.JLabel jLabel105;
-    private javax.swing.JLabel jLabel106;
     private javax.swing.JLabel jLabel107;
     private javax.swing.JLabel jLabel108;
     private javax.swing.JLabel jLabel109;
@@ -10066,6 +10230,7 @@ public class Pizzarando extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel44;
     private javax.swing.JLabel jLabel45;
+    private javax.swing.JLabel jLabel46;
     private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
@@ -10127,8 +10292,8 @@ public class Pizzarando extends javax.swing.JFrame {
     private javax.swing.JPanel jP_Bestellen_speciale;
     private javax.swing.JPanel jP_Bestellen_stagioni;
     private javax.swing.JPanel jP_admin;
+    private javax.swing.JPanel jP_admin_bestellung_aktualisieren;
     private javax.swing.JPanel jP_admin_bestellung_check;
-    private javax.swing.JPanel jP_bestellung_angekommen;
     private javax.swing.JPanel jP_cart;
     private javax.swing.JPanel jP_control;
     private javax.swing.JPanel jP_home;
@@ -10284,7 +10449,7 @@ public class Pizzarando extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_landing_admin_bestellinfos;
     private javax.swing.JLabel lbl_landing_benutzer_passwort;
     private javax.swing.JList<String> list_admin_bestellungen;
-    private javax.swing.JTextArea txa_landing_Cart_main_Extra;
+    private javax.swing.JTextArea txa_landing_kasse_Extra;
     private javax.swing.JLabel txt_Benutzer;
     private javax.swing.JLabel txt_Home;
     private javax.swing.JScrollPane txt_admin_Infos_Bestellung;
